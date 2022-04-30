@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8663229977926964726}
   - component: {fileID: 7940376044919021188}
   - component: {fileID: 7940376044919021189}
+  - component: {fileID: 5143483398623980205}
   m_Layer: 0
   m_Name: default
   m_TagString: Untagged
@@ -98,7 +99,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
 --- !u!114 &7940376044919021189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -114,7 +115,6 @@ MonoBehaviour:
   isMetallic: 0
   isStatic: 0
   magnetismWithoutUseForces: 0
-  magneticRigidbody: {fileID: 7940376044919021188}
   AdvanceSettings: 0
   turnOnMagnetism: 0
   affectByMagnetism: 1
@@ -132,6 +132,20 @@ MonoBehaviour:
   TimeOff: 0
   changePolarity: 0
   timeToChange: 0
+--- !u!64 &5143483398623980205
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2269044282558323475}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -2432090755550338912, guid: 71a00d536a5c8e64db74952128871f0c, type: 3}
 --- !u!1 &7129347883302020042
 GameObject:
   m_ObjectHideFlags: 0

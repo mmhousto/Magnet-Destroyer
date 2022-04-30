@@ -54,7 +54,7 @@ public class MagneticTool : MonoBehaviour
 
     [Space]
     [SerializeField] [Tooltip("Is more accurate with forces")] private bool magnetismWithoutUseForces;
-    [SerializeField, DisableIf("magnetismWithoutUseForces", true)] [Tooltip("If you do not put anything, the mass will be assumed to be one KG")] private Rigidbody magneticRigidbody;
+    [DisableIf("magnetismWithoutUseForces", true)] [Tooltip("If you do not put anything, the mass will be assumed to be one KG")] private Rigidbody magneticRigidbody;
     [Space]
     [SerializeField] private bool AdvanceSettings;
 
@@ -120,6 +120,7 @@ public class MagneticTool : MonoBehaviour
     #region Unity Functions
     void Start()
     {
+        magneticRigidbody = GetComponent<Rigidbody>();
         offsetDone = false;
         magneticObjects = new List<GameObject>();
         magneticObjectsOut = new List<GameObject>();

@@ -26,6 +26,7 @@ namespace Com.MorganHouston.MagnetDestroyer
             menuCam.SetActive(false);
             magnet.SetActive(true);
             gameCam.SetActive(true);
+            SpawnManager._sharedInstance.SpawnFirstRoom();
         }
 
         

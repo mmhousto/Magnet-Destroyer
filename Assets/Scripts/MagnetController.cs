@@ -74,5 +74,32 @@ namespace Com.MorganHouston.MagnetDestroyer
             magnetPowerSlider.value = magnetTime;
         }
 
+        private void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Magnetic") && magnet.NorthPole == false)
+            {
+                other.GetComponent<MagneticTool>().AffectByMagnetism = true;
+                other.GetComponentInChildren<Light>().intensity = 0;
+                other.GetComponent<RotateObject>().enabled = false;
+                other.transform.parent = null;
+            }
+            else if (other.CompareTag("Magnetic") && magnet.NorthPole == true)
+            {
+                other.GetComponent<MagneticTool>().AffectByMagnetism = false;
+            }
+        }
+
+        private void OnTriggerExit(Collider other)
+        {
+            if (other.CompareTag("Room"))
+            {
+                SpawnManager._sharedInstance.SpawnNextRoom();
+            }
+            if (other.CompareTag("Reset"))
+            {
+                SpawnManager._sharedInstance.ResetCanSpawn();
+            }
+        }
+
     }
 }

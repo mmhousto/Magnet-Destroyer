@@ -3,7 +3,12 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - MetalicCube2
+  - MagneticTrap
+  - Magnetic
+  - Room
+  - Reset
   layers:
   - Default
   - TransparentFX
