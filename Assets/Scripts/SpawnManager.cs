@@ -55,6 +55,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         public void SpawnFirstRoom()
         {
             GameObject room = GetPooledObject();
+            firstRoomSpawned = room;
             if (room != null)
             {
                 room.transform.position = spawnPosition;
@@ -70,7 +71,6 @@ namespace Com.MorganHouston.MagnetDestroyer
             {
                 DestroyPrevRoom();
                 GameObject room = GetPooledObject();
-                roomToRemove = room;
                 if (room != null)
                 {
                     room.transform.position = spawnPosition;
@@ -78,12 +78,14 @@ namespace Com.MorganHouston.MagnetDestroyer
                     room.SetActive(true);
                     spawnPosition += offset;
                 }
+                canSpawn = false;
             }
         }
 
-        public void ResetCanSpawn()
+        public void ResetCanSpawn(GameObject room)
         {
             canSpawn = true;
+            roomToRemove = room;
         }
 
         public void DestroyPrevRoom()

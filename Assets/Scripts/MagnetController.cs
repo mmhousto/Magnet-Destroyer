@@ -97,7 +97,7 @@ namespace Com.MorganHouston.MagnetDestroyer
             }
             if (other.CompareTag("Reset"))
             {
-                SpawnManager._sharedInstance.ResetCanSpawn();
+                SpawnManager._sharedInstance.ResetCanSpawn(other.gameObject);
             }
         }
 
