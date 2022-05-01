@@ -19,7 +19,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         public GameObject okayBadButton, errorScreen, mainMenuScreen, signInScreen, destroyButton;
 
-        public TextMeshProUGUI highscoresLabel, gameOverHighscoresLabel;
+        public TextMeshProUGUI highscoresLabel, gameOverHighscoresLabel, memberIDLabel;
 
         public static bool isSignedIn;
 
@@ -69,6 +69,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                 Debug.Log("successfully started LootLocker session");
 
                 memberID = response.player_id;
+                memberIDLabel.text = "ID: " + memberID.ToString();
                 ShowTopScores();
                 Login();
 
@@ -107,14 +108,14 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         public void ShowTopScores()
         {
-
+            highscores = "";
             LootLockerSDKManager.GetScoreList(2677, count, (response) =>
             {
                 if (response.statusCode == 200)
                 {
                     foreach (LootLockerLeaderboardMember player in response.items)
                     {
-                        highscores = $"{player.rank}\t\t\t{player.member_id}\t\t\t{player.score}\n";
+                        highscores += $"{player.rank}\t\t\t{player.member_id}\t\t\t{player.score}\n";
                     }
                     highscoresLabel.text = "RANK\t\t\tMEMBER\t\t\tSCORE\n" +
                                             highscores;
@@ -123,12 +124,14 @@ namespace Com.MorganHouston.MagnetDestroyer
                 else
                 {
                     Debug.Log("failed: " + response.Error);
+                    highscores = "Failed to load...";
                 }
             });
         }
 
         public void ShowScore()
         {
+            gameOverHighscores = "";
             LootLockerSDKManager.GetMemberRank(leaderboardID, memberID, (response) =>
             {
                 if (response.statusCode == 200)
@@ -143,7 +146,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                         {
                             foreach (LootLockerLeaderboardMember player in response.items)
                             {
-                                gameOverHighscores = $"{player.rank}\t\t\t{player.member_id}\t\t\t{player.score}\n";
+                                gameOverHighscores += $"{player.rank}\t\t\t{player.member_id}\t\t\t{player.score}\n";
                             }
                             gameOverHighscoresLabel.text = "RANK\t\tMEMBER\t\tSCORE\n" +
                                                     gameOverHighscores;
@@ -153,6 +156,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                         else
                         {
                             Debug.Log("failed: " + response.Error);
+                            gameOverHighscores = "Failed to Load...";
                         }
                     });
                 }

@@ -12,11 +12,11 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         public Slider magnetPowerSlider;
 
-        private StarterAssetsInputs inputs;
-        private Rigidbody magnetRigidbody;
+        public StarterAssetsInputs inputs;
+        public Rigidbody magnetRigidbody;
         private MagneticTool magnet;
         private float horizontal, vertical;
-        private float verticalSpeed = 12.5f;
+        public float verticalSpeed = 12.5f;
         private float movementSpeed = 15f;
         [Range(0,15)]
         private float magnetTime = 15f;
@@ -31,7 +31,6 @@ namespace Com.MorganHouston.MagnetDestroyer
         // Start is called before the first frame update
         void Start()
         {
-            inputs = GetComponent<StarterAssetsInputs>();
             magnetRigidbody = GetComponent<Rigidbody>();
             magnet = GetComponent<MagneticTool>();
         }
@@ -113,46 +112,6 @@ namespace Com.MorganHouston.MagnetDestroyer
             else if (other.CompareTag("Magnetic") && magnet.NorthPole == true)
             {
                 other.GetComponent<MagneticTool>().AffectByMagnetism = false;
-            }
-
-            if (other.CompareTag("MetalicCube2"))
-            {
-                if (magnet.NorthPole == true)
-                {
-
-                }
-                else if (magnet.NorthPole == false)
-                {
-                    magnetRigidbody.isKinematic = false;
-                }
-
-            }
-
-            if (other.CompareTag("MetalicCube1"))
-            {
-                if (magnet.NorthPole == true)
-                {
-                    magnetRigidbody.isKinematic = false;
-                }
-                else if (magnet.NorthPole == false)
-                {
-                    
-                }
-
-            }
-        }
-
-        private void OnTriggerExit(Collider other)
-        {
-
-            if (other.CompareTag("MetalicCube2"))
-            {
-                magnetRigidbody.isKinematic = true;
-            }
-
-            if (other.CompareTag("MetalicCube1"))
-            {
-                magnetRigidbody.isKinematic = true;
             }
         }
 

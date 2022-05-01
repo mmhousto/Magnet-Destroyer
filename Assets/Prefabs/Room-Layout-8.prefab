@@ -52,6 +52,7 @@ GameObject:
   - component: {fileID: 8814018741203693881}
   - component: {fileID: 2378490488767989510}
   - component: {fileID: 4692568824164564607}
+  - component: {fileID: 4487812490483313477}
   m_Layer: 0
   m_Name: Blocker
   m_TagString: Untagged
@@ -388,6 +389,19 @@ MeshCollider:
   m_Convex: 1
   m_CookingOptions: 30
   m_Mesh: {fileID: 0}
+--- !u!65 &4487812490483313477
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7036381312654471828}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 46, y: 6, z: 4}
+  m_Center: {x: 23, y: 3, z: -2}
 --- !u!1001 &870342153741254241
 PrefabInstance:
   m_ObjectHideFlags: 0
