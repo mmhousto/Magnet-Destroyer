@@ -12,7 +12,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         public static GameManager _instance;
 
         public StarterAssetsInputs inputs;
-        public GameObject menuCam, gameCam, magnet, gameOverScreen, tryAgainButton;
+        public GameObject menuCam, gameCam, magnet, gameOverScreen, tryAgainButton, pauseMenu, resumeGameButton;
         public bool gameStarted = false;
         public bool gameOver = false;
 
@@ -25,7 +25,11 @@ namespace Com.MorganHouston.MagnetDestroyer
         // Update is called once per frame
         void Update()
         {
-
+            if(gameOver == true)
+            {
+                pauseMenu.SetActive(false);
+                gameOverScreen.SetActive(true);
+            }
         }
 
         // Start is called before the first frame update
@@ -46,6 +50,23 @@ namespace Com.MorganHouston.MagnetDestroyer
             gameCam.SetActive(true);
             SpawnManager._sharedInstance.SpawnFirstRoom();
             gameStarted = true;
+        }
+
+        public void PauseGame()
+        {
+            Time.timeScale = 0;
+            inputs.enabled = false;
+            pauseMenu.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(resumeGameButton);
+        }
+
+        public void ResumeGame()
+        {
+            Time.timeScale = 1;
+            inputs.enabled = true;
+            inputs.pause = false;
+            pauseMenu.SetActive(false);
         }
 
         public void RestartGame()

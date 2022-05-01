@@ -42,6 +42,19 @@ namespace Com.MorganHouston.MagnetDestroyer
             CheckCanManetize();
             Magnetize();
             IncreaseSpeed();
+            CheckForPause();
+        }
+
+        private void CheckForPause()
+        {
+            if(inputs.pause == true && GameManager._instance.gameOver == false)
+            {
+                GameManager._instance.PauseGame();
+            }
+            else if(inputs.pause == false && GameManager._instance.gameOver == false)
+            {
+                GameManager._instance.ResumeGame();
+            }
         }
 
         private void IncreaseSpeed()

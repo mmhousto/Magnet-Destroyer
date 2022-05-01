@@ -35,7 +35,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
             if (GetComponentInChildren<Light>() != null)
             {
-                GetComponentInChildren<Light>().intensity = 1;
+                GetComponentInChildren<Light>().intensity = 90;
             }
 
 
