@@ -17,7 +17,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         public GameManager gameManager;
 
-        public GameObject okayBadButton, errorScreen, mainMenuScreen, signInScreen;
+        public GameObject okayBadButton, errorScreen, mainMenuScreen, signInScreen, destroyButton;
 
         public TextMeshProUGUI highscoresLabel, gameOverHighscoresLabel;
 
@@ -55,7 +55,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                     errorScreen.SetActive(true);
                     signInScreen.SetActive(false);
                     isSignedIn = false;
-                    for(int i = signInAttempts; i < MAX_SIGN_IN_ATTEMPTS; i++)
+                    for (int i = signInAttempts; i < MAX_SIGN_IN_ATTEMPTS; i++)
                     {
                         SignInGuest();
                         return;
@@ -67,11 +67,11 @@ namespace Com.MorganHouston.MagnetDestroyer
                 }
 
                 Debug.Log("successfully started LootLocker session");
-                
+
                 memberID = response.player_id;
                 ShowTopScores();
                 Login();
-                
+
             });
         }
         private void OnApplicationQuit()
@@ -85,6 +85,8 @@ namespace Com.MorganHouston.MagnetDestroyer
             signInScreen.SetActive(false);
             errorScreen.SetActive(false);
             mainMenuScreen.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(destroyButton);
         }
 
         public void SubmitScore()
@@ -160,6 +162,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                 }
             });
         }
+
     }
 
 }

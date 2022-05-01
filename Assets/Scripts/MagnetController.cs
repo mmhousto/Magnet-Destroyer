@@ -8,6 +8,8 @@ namespace Com.MorganHouston.MagnetDestroyer
 {
     public class MagnetController : MonoBehaviour
     {
+        public static MagnetController _instance;
+
         public Slider magnetPowerSlider;
 
         private StarterAssetsInputs inputs;
@@ -16,9 +18,15 @@ namespace Com.MorganHouston.MagnetDestroyer
         private float horizontal, vertical;
         private float verticalSpeed = 12.5f;
         private float movementSpeed = 15f;
-        [Range(0,20)]
-        private float magnetTime = 20f;
+        [Range(0,15)]
+        private float magnetTime = 15f;
         private bool canMagnetize = true;
+
+        private void Awake()
+        {
+            _instance = this;
+            gameObject.SetActive(false);
+        }
 
         // Start is called before the first frame update
         void Start()
@@ -39,7 +47,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         private void IncreaseSpeed()
         {
-            if(verticalSpeed < 50f)
+            if(verticalSpeed < 60f)
                 verticalSpeed += Time.deltaTime / 2;
         }
 
@@ -69,7 +77,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         private void CheckCanManetize()
         {
-            if (magnet.NorthPole == true && magnetTime < 20)
+            if (magnet.NorthPole == true && magnetTime < 15)
             {
                 magnetTime += Time.deltaTime;
             }
@@ -132,15 +140,6 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         private void OnTriggerExit(Collider other)
         {
-            if (other.CompareTag("Room"))
-            {
-                SpawnManager._sharedInstance.SpawnNextRoom();
-            }
-
-            if (other.CompareTag("Reset"))
-            {
-                SpawnManager._sharedInstance.ResetCanSpawn(other.gameObject);
-            }
 
             if (other.CompareTag("MetalicCube2"))
             {
@@ -159,7 +158,7 @@ namespace Com.MorganHouston.MagnetDestroyer
             {
                 if (magnet.NorthPole == true)
                 {
-                    magnetTime = 20f;
+                    magnetTime += 5f;
                 }
                 else if (magnet.NorthPole == false)
                 {
@@ -181,7 +180,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                 }
                 else if (magnet.NorthPole == false)
                 {
-                    magnetTime = 20f;
+                    magnetTime += 5f;
                 }
 
             }

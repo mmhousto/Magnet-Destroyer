@@ -45,6 +45,7 @@ GameObject:
   - component: {fileID: 2430210559409588445}
   - component: {fileID: 2430210559409588443}
   - component: {fileID: 2430210559409588444}
+  - component: {fileID: 6904952649336667687}
   m_Layer: 0
   m_Name: default
   m_TagString: Untagged
@@ -159,7 +160,6 @@ MonoBehaviour:
   isMetallic: 0
   isStatic: 0
   magnetismWithoutUseForces: 0
-  magneticRigidbody: {fileID: 2430210559409588445}
   AdvanceSettings: 0
   turnOnMagnetism: 0
   affectByMagnetism: 1
@@ -177,3 +177,15 @@ MonoBehaviour:
   TimeOff: 0
   changePolarity: 0
   timeToChange: 0
+--- !u!114 &6904952649336667687
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5833698159820098897}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 655aef175a33720438727cc864dc6e16, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

@@ -36,5 +36,10 @@ namespace Com.MorganHouston.MagnetDestroyer
                     scoreText.text = Convert.ToInt32(Score).ToString();
             }
         }
+
+        public void AddScore(float scoreToAdd)
+        {
+            Score += scoreToAdd;
+        }
     }
 }

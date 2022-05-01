@@ -13,6 +13,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         public GameObject spawnRoom;
         public int amountToPool;
 
+        private Queue<GameObject> roomsToRemove;
         private GameObject roomToRemove, firstRoomSpawned;
         private bool canSpawn = true;
         private bool firstRoomRemoved = false;
@@ -20,6 +21,9 @@ namespace Com.MorganHouston.MagnetDestroyer
         private Vector3 spawnPosition;
         [SerializeField]
         private Vector3 offset;
+        [SerializeField]
+        private Vector3 endOffSet;
+        private Vector3 endPosition;
 
 
         private void Awake()
@@ -33,8 +37,9 @@ namespace Com.MorganHouston.MagnetDestroyer
         void Start()
         {
             pooledObjects = new List<GameObject>();
+            roomsToRemove = new Queue<GameObject>();
             GameObject tmp;
-            for(int i = 0; i < amountToPool; i++)
+            for (int i = 0; i < amountToPool; i++)
             {
                 tmp = Instantiate(objectsToPool[i]);
                 tmp.SetActive(false);
@@ -42,9 +47,19 @@ namespace Com.MorganHouston.MagnetDestroyer
             }
         }
 
+        private void Update()
+        {
+            if (MagnetController._instance.transform.position.z > endPosition.z && GameManager._instance.gameStarted == true && GameManager._instance.gameOver == false)
+            {
+                SpawnNextRoom();
+            }
+        }
+
         public GameObject GetPooledObject()
         {
-            for(int i = 0; i < amountToPool; i++)
+            int rand = Random.Range(0, 8);
+
+            for (int i = rand; i < amountToPool; i = Random.Range(0, 8))
             {
                 if (!pooledObjects[i].activeInHierarchy)
                 {
@@ -60,27 +75,37 @@ namespace Com.MorganHouston.MagnetDestroyer
             firstRoomSpawned = room;
             if (room != null)
             {
+                endPosition = spawnPosition + endOffSet;
                 room.transform.position = spawnPosition;
                 room.transform.rotation = Quaternion.identity;
                 room.SetActive(true);
+                roomsToRemove.Enqueue(room);
                 spawnPosition += offset;
             }
         }
 
         public void SpawnNextRoom()
         {
-            if (canSpawn)
+            if (spawnRoom != null)
+            {
+                Destroy(spawnRoom);
+            }
+
+            GameObject room = GetPooledObject();
+            
+            if (room != null)
+            {
+                endPosition = spawnPosition + endOffSet;
+                room.transform.position = spawnPosition;
+                room.transform.rotation = Quaternion.identity;
+                room.SetActive(true);
+                roomsToRemove.Enqueue(room);
+                spawnPosition += offset;
+            }
+            
+            if(roomsToRemove.Count > 2)
             {
                 DestroyPrevRoom();
-                GameObject room = GetPooledObject();
-                if (room != null)
-                {
-                    room.transform.position = spawnPosition;
-                    room.transform.rotation = Quaternion.identity;
-                    room.SetActive(true);
-                    spawnPosition += offset;
-                }
-                canSpawn = false;
             }
         }
 
@@ -92,18 +117,8 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         public void DestroyPrevRoom()
         {
-            if(spawnRoom != null)
-            {
-                Destroy(spawnRoom);
-            } else if (firstRoomRemoved == false)
-            {
-                firstRoomRemoved = true;
-                firstRoomSpawned.SetActive(false);
-            }
-            else
-            {
-                roomToRemove.SetActive(false);
-            }
+            roomToRemove = roomsToRemove.Dequeue();
+            roomToRemove.SetActive(false);
         }
     }
 }
