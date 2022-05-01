@@ -103,8 +103,12 @@ namespace Com.MorganHouston.MagnetDestroyer
             if (other.CompareTag("Magnetic") && magnet.NorthPole == false)
             {
                 other.GetComponent<MagneticTool>().AffectByMagnetism = true;
-                other.GetComponentInChildren<Light>().intensity = 0;
-                other.GetComponent<RotateObject>().enabled = false;
+
+                if(other.GetComponentInChildren<Light>() != null)
+                    other.GetComponentInChildren<Light>().intensity = 0;
+
+                if(other.GetComponent<RotateObject>() != null)
+                    other.GetComponent<RotateObject>().enabled = false;
             }
             else if (other.CompareTag("Magnetic") && magnet.NorthPole == true)
             {

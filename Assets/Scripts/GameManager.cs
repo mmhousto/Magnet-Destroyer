@@ -19,6 +19,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         private void Awake()
         {
             _instance = this;
+            inputs.DisableInput();
         }
 
         // Update is called once per frame
@@ -30,7 +31,6 @@ namespace Com.MorganHouston.MagnetDestroyer
         // Start is called before the first frame update
         public void GameOver()
         {
-            inputs.EnableMouseInput();
             gameOverScreen.SetActive(true);
             LootLockerManager.Instance.SubmitScore();
             gameOver = true;
@@ -41,7 +41,6 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         public void StartGame()
         {
-            inputs.DisableInput();
             menuCam.SetActive(false);
             magnet.SetActive(true);
             gameCam.SetActive(true);

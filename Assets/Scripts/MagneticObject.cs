@@ -13,22 +13,58 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         private void Start()
         {
-            spawnPosition = transform.parent.localPosition;
-            spawnRotation = transform.parent.rotation;
             rb = GetComponent<Rigidbody>();
+        }
+
+        private void OnEnable()
+        {
+            if (rb != null)
+                rb.velocity = Vector3.zero;
+
+            transform.localPosition = new Vector3(0, 0, 0);
+            transform.localRotation = Quaternion.identity;
+
+
+            if (GetComponent<MagneticTool>() != null)
+            {
+                MagneticTool mag = GetComponent<MagneticTool>();
+                mag.AffectByMagnetism = true;
+                mag.ConstantMagneticForce = true;
+
+            }
+
+            if (GetComponentInChildren<Light>() != null)
+            {
+                GetComponentInChildren<Light>().intensity = 1;
+            }
+
+
+            if (GetComponent<RotateObject>() != null)
+            {
+                GetComponent<RotateObject>().enabled = true;
+                GetComponent<MagneticTool>().AffectByMagnetism = false;
+            }
         }
 
         private void OnDisable()
         {
             hasHit = false;
-            transform.localPosition = spawnPosition;
-            transform.rotation = spawnRotation;
-
-            if(rb != null)
+            if (rb != null)
                 rb.velocity = Vector3.zero;
 
+            transform.localPosition = new Vector3(0, 0, 0);
+            transform.rotation = Quaternion.identity;
+
+            
+
             if(GetComponent<MagneticTool>() != null)
-                GetComponent<MagneticTool>().AffectByMagnetism = true;
+            {
+                MagneticTool mag = GetComponent<MagneticTool>();
+                mag.AffectByMagnetism = false;
+                mag.ConstantMagneticForce = false;
+
+            }
+                
 
             if(GetComponentInChildren<Light>() != null)
             {
@@ -44,11 +80,10 @@ namespace Com.MorganHouston.MagnetDestroyer
                 
         }
 
-        private void OnTriggerEnter(Collider other)
+        private void OnCollisionEnter(Collision other)
         {
-            if (other.CompareTag("Player"))
+            if (other.transform.CompareTag("Player") && hasHit == false)
             {
-                Debug.Log("Hit");
                 hasHit = true;
                 ScoreManager._instance.AddScore(1f);
             }
