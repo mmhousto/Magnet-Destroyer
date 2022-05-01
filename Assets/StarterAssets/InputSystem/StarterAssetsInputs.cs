@@ -22,7 +22,7 @@ namespace StarterAssets
 		public bool cursorInputForLook = true;
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
-		public void OnMove(InputValue value)
+        public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
 		}
@@ -82,10 +82,25 @@ namespace StarterAssets
 			SetCursorState(cursorLocked);
 		}
 
-		private void SetCursorState(bool newState)
+		public void SetCursorState(bool newState)
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
+
+		public void EnableMouseInput()
+        {
+			cursorLocked = false;
+			SetCursorState(cursorLocked);
+		}
+
+		/// <summary>
+		/// Disable Mouse Input
+		/// </summary>
+		public void DisableInput()
+        {
+			cursorLocked = true;
+			SetCursorState(cursorLocked);
+        }
 	}
 	
 }

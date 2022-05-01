@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using TMPro;
 using LootLocker.Requests;
+using System;
 
 namespace Com.MorganHouston.MagnetDestroyer
 {
@@ -15,13 +17,18 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         public GameManager gameManager;
 
-        public TextMeshProUGUI highscoresLabel;
+        public GameObject okayBadButton, errorScreen, mainMenuScreen, signInScreen;
 
-        private string highscores;
+        public TextMeshProUGUI highscoresLabel, gameOverHighscoresLabel;
+
+        public static bool isSignedIn;
+
+        private string highscores, gameOverHighscores;
         int memberID;
         string leaderboardID = "highscore-key";
-        int score = 1000;
-        int count = 50;
+        int count = 10;
+        int signInAttempts = 0;
+        const int MAX_SIGN_IN_ATTEMPTS = 3;
 
         private void Awake()
         {
@@ -33,28 +40,61 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         void Start()
         {
+            if (isSignedIn)
+            {
+                Login();
+            }
+        }
+
+        public void SignInGuest()
+        {
             LootLockerSDKManager.StartGuestSession((response) =>
             {
                 if (!response.success)
                 {
-                    Debug.Log("error starting LootLocker session");
-
+                    errorScreen.SetActive(true);
+                    signInScreen.SetActive(false);
+                    isSignedIn = false;
+                    for(int i = signInAttempts; i < MAX_SIGN_IN_ATTEMPTS; i++)
+                    {
+                        SignInGuest();
+                        return;
+                    }
+                    okayBadButton.SetActive(true);
+                    EventSystem.current.SetSelectedGameObject(null);
+                    EventSystem.current.SetSelectedGameObject(okayBadButton);
                     return;
                 }
 
                 Debug.Log("successfully started LootLocker session");
+                
                 memberID = response.player_id;
-                gameManager.GameOver();
+                ShowTopScores();
+                Login();
+                
             });
+        }
+        private void OnApplicationQuit()
+        {
+            isSignedIn = false;
+        }
+
+        private void Login()
+        {
+            isSignedIn = true;
+            signInScreen.SetActive(false);
+            errorScreen.SetActive(false);
+            mainMenuScreen.SetActive(true);
         }
 
         public void SubmitScore()
         {
-            LootLockerSDKManager.SubmitScore(memberID.ToString(), score, leaderboardID, (response) =>
+            LootLockerSDKManager.SubmitScore(memberID.ToString(), Convert.ToInt32(ScoreManager._instance.Score), leaderboardID, (response) =>
             {
                 if (response.statusCode == 200)
                 {
                     Debug.Log("Successful");
+                    ShowScore();
                 }
                 else
                 {
@@ -76,6 +116,43 @@ namespace Com.MorganHouston.MagnetDestroyer
                     }
                     highscoresLabel.text = "RANK\t\t\tMEMBER\t\t\tSCORE\n" +
                                             highscores;
+                    Debug.Log(highscores);
+                }
+                else
+                {
+                    Debug.Log("failed: " + response.Error);
+                }
+            });
+        }
+
+        public void ShowScore()
+        {
+            LootLockerSDKManager.GetMemberRank(leaderboardID, memberID, (response) =>
+            {
+                if (response.statusCode == 200)
+                {
+                    int rank = response.rank;
+                    int count = 5;
+                    int after = rank < 6 ? 0 : rank - 5;
+
+                    LootLockerSDKManager.GetScoreListMain(2677, count, after, (response) =>
+                    {
+                        if (response.statusCode == 200)
+                        {
+                            foreach (LootLockerLeaderboardMember player in response.items)
+                            {
+                                gameOverHighscores = $"{player.rank}\t\t\t{player.member_id}\t\t\t{player.score}\n";
+                            }
+                            gameOverHighscoresLabel.text = "RANK\t\tMEMBER\t\tSCORE\n" +
+                                                    gameOverHighscores;
+                            Debug.Log(gameOverHighscores);
+                            Debug.Log("Successful");
+                        }
+                        else
+                        {
+                            Debug.Log("failed: " + response.Error);
+                        }
+                    });
                 }
                 else
                 {

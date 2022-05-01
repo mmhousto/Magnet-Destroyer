@@ -9,6 +9,7 @@ TagManager:
   - Magnetic
   - Room
   - Reset
+  - MetalicCube1
   layers:
   - Default
   - TransparentFX

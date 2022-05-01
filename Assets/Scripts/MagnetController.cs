@@ -34,6 +34,13 @@ namespace Com.MorganHouston.MagnetDestroyer
             MoveMagnet();
             CheckCanManetize();
             Magnetize();
+            IncreaseSpeed();
+        }
+
+        private void IncreaseSpeed()
+        {
+            if(verticalSpeed < 50f)
+                verticalSpeed += Time.deltaTime / 2;
         }
 
         private void MoveMagnet()
@@ -43,6 +50,15 @@ namespace Com.MorganHouston.MagnetDestroyer
             //vertical = move.y;
             Vector3 movement = new Vector3(horizontal * movementSpeed, 0, verticalSpeed) * Time.deltaTime;
             transform.Translate(movement);
+
+            if(transform.position.x < 3)
+            {
+                transform.position = new Vector3(3, transform.position.y, transform.position.z);
+            }
+            if(transform.position.x > 47)
+            {
+                transform.position = new Vector3(47, transform.position.y, transform.position.z);
+            }
         }
 
         private void Magnetize()
@@ -81,11 +97,36 @@ namespace Com.MorganHouston.MagnetDestroyer
                 other.GetComponent<MagneticTool>().AffectByMagnetism = true;
                 other.GetComponentInChildren<Light>().intensity = 0;
                 other.GetComponent<RotateObject>().enabled = false;
-                other.transform.parent = null;
             }
             else if (other.CompareTag("Magnetic") && magnet.NorthPole == true)
             {
                 other.GetComponent<MagneticTool>().AffectByMagnetism = false;
+            }
+
+            if (other.CompareTag("MetalicCube2"))
+            {
+                if (magnet.NorthPole == true)
+                {
+
+                }
+                else if (magnet.NorthPole == false)
+                {
+                    magnetRigidbody.isKinematic = false;
+                }
+
+            }
+
+            if (other.CompareTag("MetalicCube1"))
+            {
+                if (magnet.NorthPole == true)
+                {
+                    magnetRigidbody.isKinematic = false;
+                }
+                else if (magnet.NorthPole == false)
+                {
+                    
+                }
+
             }
         }
 
@@ -95,9 +136,54 @@ namespace Com.MorganHouston.MagnetDestroyer
             {
                 SpawnManager._sharedInstance.SpawnNextRoom();
             }
+
             if (other.CompareTag("Reset"))
             {
                 SpawnManager._sharedInstance.ResetCanSpawn(other.gameObject);
+            }
+
+            if (other.CompareTag("MetalicCube2"))
+            {
+                magnetRigidbody.isKinematic = true;
+            }
+
+            if (other.CompareTag("MetalicCube1"))
+            {
+                magnetRigidbody.isKinematic = true;
+            }
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            if (collision.transform.CompareTag("MetalicCube2"))
+            {
+                if (magnet.NorthPole == true)
+                {
+                    magnetTime = 20f;
+                }
+                else if (magnet.NorthPole == false)
+                {
+                    verticalSpeed = 0f;
+                    inputs.enabled = false;
+                    GameManager._instance.GameOver();
+                }
+
+            }
+
+            if (collision.transform.CompareTag("MetalicCube1"))
+            {
+                if (magnet.NorthPole == true)
+                {
+                    verticalSpeed = 0f;
+                    inputs.enabled = false;
+                    GameManager._instance.GameOver();
+                    
+                }
+                else if (magnet.NorthPole == false)
+                {
+                    magnetTime = 20f;
+                }
+
             }
         }
 

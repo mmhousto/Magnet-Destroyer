@@ -25,6 +25,8 @@ namespace Com.MorganHouston.MagnetDestroyer
         private void Awake()
         {
             _sharedInstance = this;
+            offset = new Vector3(0, 0, 50);
+            spawnPosition = new Vector3(0, 0, -11.75f);
         }
 
         // Start is called before the first frame update
