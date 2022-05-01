@@ -12,9 +12,10 @@ namespace Com.MorganHouston.MagnetDestroyer
         public static GameManager _instance;
 
         public StarterAssetsInputs inputs;
-        public GameObject menuCam, gameCam, magnet, gameOverScreen, tryAgainButton, pauseMenu, resumeGameButton;
+        public GameObject menuCam, gameCam, magnet, mainMenuCanvas, gameOverScreen, tryAgainButton, pauseMenu, resumeGameButton;
         public bool gameStarted = false;
         public bool gameOver = false;
+        public bool isPaused = false;
 
         private void Awake()
         {
@@ -46,14 +47,17 @@ namespace Com.MorganHouston.MagnetDestroyer
         public void StartGame()
         {
             menuCam.SetActive(false);
+            Destroy(mainMenuCanvas);
             magnet.SetActive(true);
             gameCam.SetActive(true);
             SpawnManager._sharedInstance.SpawnFirstRoom();
+            EventSystem.current.SetSelectedGameObject(null);
             gameStarted = true;
         }
 
         public void PauseGame()
         {
+            isPaused = true;
             Time.timeScale = 0;
             inputs.enabled = false;
             pauseMenu.SetActive(true);
@@ -63,6 +67,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         public void ResumeGame()
         {
+            isPaused = false;
             Time.timeScale = 1;
             inputs.enabled = true;
             inputs.pause = false;

@@ -47,11 +47,11 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         private void CheckForPause()
         {
-            if(inputs.pause == true && GameManager._instance.gameOver == false)
+            if(inputs.pause == true && GameManager._instance.isPaused == false && GameManager._instance.gameOver == false)
             {
                 GameManager._instance.PauseGame();
             }
-            else if(inputs.pause == false && GameManager._instance.gameOver == false)
+            else if(inputs.pause == false && GameManager._instance.isPaused == true && GameManager._instance.gameOver == false)
             {
                 GameManager._instance.ResumeGame();
             }
