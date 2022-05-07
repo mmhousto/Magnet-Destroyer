@@ -21,7 +21,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         public TextMeshProUGUI highscoresLabel, gameOverHighscoresLabel, memberIDLabel;
 
-        public static bool isSignedIn;
+        public bool isSignedIn;
 
         private string highscores, gameOverHighscores;
         int memberID;
@@ -55,7 +55,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                     errorScreen.SetActive(true);
                     signInScreen.SetActive(false);
                     isSignedIn = false;
-                    for (int i = signInAttempts; i < MAX_SIGN_IN_ATTEMPTS; i++)
+                    for (signInAttempts = 0; signInAttempts < MAX_SIGN_IN_ATTEMPTS; signInAttempts++)
                     {
                         SignInGuest();
                         return;
@@ -69,7 +69,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                 Debug.Log("successfully started LootLocker session");
 
                 memberID = response.player_id;
-                memberIDLabel.text = "ID: " + memberID.ToString();
+                memberIDLabel.text = "User: " + memberID.ToString();
                 ShowTopScores();
                 Login();
 
@@ -88,6 +88,58 @@ namespace Com.MorganHouston.MagnetDestroyer
             mainMenuScreen.SetActive(true);
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(destroyButton);
+        }
+
+        private void ErrorTryAgainPlatform(string playerID, string userName)
+        {
+            errorScreen.SetActive(true);
+            signInScreen.SetActive(false);
+            isSignedIn = false;
+            for (signInAttempts = 0; signInAttempts < MAX_SIGN_IN_ATTEMPTS; signInAttempts++)
+            {
+                SignIn(playerID, userName);
+                return;
+            }
+            okayBadButton.SetActive(true);
+            EventSystem.current.SetSelectedGameObject(null);
+            EventSystem.current.SetSelectedGameObject(okayBadButton);
+            return;
+        }
+
+        private void UpdatePlayerName(string userName)
+        {
+            LootLockerSDKManager.SetPlayerName(userName, (response) =>
+            {
+                if (response.success)
+                {
+                    Debug.Log("Successfully set player name");
+                }
+                else
+                {
+                    Debug.Log("Error setting player name");
+                }
+            });
+        }
+
+        public void SignIn(string playerID, string userName)
+        {
+            LootLockerSDKManager.StartSession(playerID, (response) =>
+            {
+                if (response.success)
+                {
+                    Debug.Log("session with LootLocker started");
+                    memberID = response.player_id;
+                    memberIDLabel.text = "User: " + userName;
+                    UpdatePlayerName(userName);
+                    ShowTopScores();
+                    Login();
+                }
+                else
+                {
+                    Debug.Log("failed to start sessions" + response.Error);
+                    ErrorTryAgainPlatform(playerID, userName);
+                }
+            });
         }
 
         public void SubmitScore()
@@ -113,9 +165,9 @@ namespace Com.MorganHouston.MagnetDestroyer
             {
                 if (response.statusCode == 200)
                 {
-                    foreach (LootLockerLeaderboardMember player in response.items)
+                    foreach (LootLockerLeaderboardMember playerData in response.items)
                     {
-                        highscores += $"{player.rank}\t\t\t{player.member_id}\t\t\t{player.score}\n";
+                        highscores += $"{playerData.rank}\t\t\t{((playerData.player.name != null) ? playerData.player.name : playerData.member_id)}\t\t\t{playerData.score}\n";
                     }
                     highscoresLabel.text = "RANK\t\t\tMEMBER\t\t\tSCORE\n" +
                                             highscores;
@@ -144,9 +196,9 @@ namespace Com.MorganHouston.MagnetDestroyer
                     {
                         if (response.statusCode == 200)
                         {
-                            foreach (LootLockerLeaderboardMember player in response.items)
+                            foreach (LootLockerLeaderboardMember playerData in response.items)
                             {
-                                gameOverHighscores += $"{player.rank}\t\t\t{player.member_id}\t\t\t{player.score}\n";
+                                gameOverHighscores += $"{playerData.rank}\t\t\t{((playerData.player.name != null) ? playerData.player.name : playerData.member_id)}\t\t\t{playerData.score}\n";
                             }
                             gameOverHighscoresLabel.text = "RANK\t\tMEMBER\t\tSCORE\n" +
                                                     gameOverHighscores;
