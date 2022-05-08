@@ -141,7 +141,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         private void OnCollisionEnter(Collision collision)
         {
-            if (collision.transform.CompareTag("MetalicCube2"))
+            if (collision.transform.CompareTag("MetalicCube2") && collision.gameObject.GetComponentInChildren<MagneticTool>().NorthPole == true)
             {
                 if (magnet.NorthPole == true)
                 {
@@ -156,7 +156,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
             }
 
-            if (collision.transform.CompareTag("MetalicCube1"))
+            if (collision.transform.CompareTag("MetalicCube2") && collision.gameObject.GetComponentInChildren<MagneticTool>().NorthPole == false)
             {
                 if (magnet.NorthPole == true)
                 {

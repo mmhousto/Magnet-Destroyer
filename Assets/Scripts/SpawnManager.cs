@@ -106,7 +106,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                 spawnPosition += offset;
             }
             
-            if(roomsToRemove.Count > 3)
+            if(roomsToRemove.Count > 4)
             {
                 DestroyPrevRoom();
             }

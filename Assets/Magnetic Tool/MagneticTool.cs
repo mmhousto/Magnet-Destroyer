@@ -188,7 +188,7 @@ public class MagneticTool : MonoBehaviour
             {
                 if(polarityTimer >= timeToChange)
                 {
-                    northPole = !northPole;
+                    NorthPole = Convert.ToBoolean(UnityEngine.Random.Range(0, 2));
                     polarityTimer = 0;
                 }
             }

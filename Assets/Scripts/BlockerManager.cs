@@ -12,6 +12,7 @@ namespace Com.MorganHouston.MagnetDestroyer
             if (collision.transform.CompareTag("CeilingFan") || collision.transform.CompareTag("Magnetic"))
             {
                 gameObject.SetActive(false);
+                ScoreManager._instance.AddScore(5);
             }
 
             if (collision.transform.CompareTag("Player"))
