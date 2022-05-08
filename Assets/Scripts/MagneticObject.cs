@@ -1,4 +1,4 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -18,6 +18,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         private void OnEnable()
         {
+
             if (rb != null)
                 rb.velocity = Vector3.zero;
 
@@ -28,9 +29,8 @@ namespace Com.MorganHouston.MagnetDestroyer
             if (GetComponent<MagneticTool>() != null)
             {
                 MagneticTool mag = GetComponent<MagneticTool>();
-                mag.AffectByMagnetism = true;
-                mag.ConstantMagneticForce = true;
-
+                mag.AffectByMagnetism = false;
+                mag.ConstantMagneticForce = false;
             }
 
             if (GetComponentInChildren<Light>() != null)

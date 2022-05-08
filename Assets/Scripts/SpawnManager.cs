@@ -34,15 +34,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         // Start is called before the first frame update
         void Start()
         {
-            pooledObjects = new List<GameObject>();
-            roomsToRemove = new Queue<GameObject>();
-            GameObject tmp;
-            for (int i = 0; i < amountToPool; i++)
-            {
-                tmp = Instantiate(objectsToPool[i]);
-                tmp.SetActive(false);
-                pooledObjects.Add(tmp);
-            }
+            
         }
 
         private void Update()
@@ -54,11 +46,24 @@ namespace Com.MorganHouston.MagnetDestroyer
             }
         }
 
+        public void PoolObjects()
+        {
+            pooledObjects = new List<GameObject>();
+            roomsToRemove = new Queue<GameObject>();
+            GameObject tmp;
+            for (int i = 0; i < amountToPool; i++)
+            {
+                tmp = Instantiate(objectsToPool[i]);
+                tmp.SetActive(false);
+                pooledObjects.Add(tmp);
+            }
+        }
+
         public GameObject GetPooledObject()
         {
-            int rand = Random.Range(0, amountToPool+1);
+            int rand = Random.Range(0, amountToPool);
 
-            for (int i = rand; i < amountToPool; i = Random.Range(0, amountToPool + 1))
+            for (int i = rand; i < amountToPool; i = Random.Range(0, amountToPool))
             {
                 if (!pooledObjects[i].activeInHierarchy)
                 {

@@ -14,13 +14,28 @@ public class ChangeMaterial : MonoBehaviour
         {
             var script2 = gameObject.GetComponent<MagneticTool2D>();
 
-            if (script2.NorthPole) gameObject.GetComponent<MeshRenderer>().material = northMaterial;
-            else gameObject.GetComponent<MeshRenderer>().material = southMaterial;
+            if (script2.NorthPole && gameObject.GetComponent<MeshRenderer>() != null)
+                gameObject.GetComponent<MeshRenderer>().material = northMaterial;
+            else if(!script2.NorthPole && gameObject.GetComponent<MeshRenderer>() != null)
+                gameObject.GetComponent<MeshRenderer>().material = southMaterial;
+
+            if (script2.NorthPole && gameObject.GetComponentInParent<MeshRenderer>() != null)
+                gameObject.GetComponentInParent<MeshRenderer>().material = northMaterial;
+            else if (!script2.NorthPole && gameObject.GetComponentInParent<MeshRenderer>() != null)
+                gameObject.GetComponentInParent<MeshRenderer>().material = southMaterial;
         }
         else
         {
-            if (script.NorthPole) gameObject.GetComponent<MeshRenderer>().material = northMaterial;
-            else gameObject.GetComponent<MeshRenderer>().material = southMaterial;
+            if (script.NorthPole && gameObject.GetComponent<MeshRenderer>() != null)
+                gameObject.GetComponent<MeshRenderer>().material = northMaterial;
+            else if (!script.NorthPole && gameObject.GetComponent<MeshRenderer>() != null)
+                gameObject.GetComponent<MeshRenderer>().material = southMaterial;
+
+            if (script.NorthPole && gameObject.GetComponentInParent<MeshRenderer>() != null)
+                gameObject.GetComponentInParent<MeshRenderer>().material = northMaterial;
+            else if (!script.NorthPole && gameObject.GetComponentInParent<MeshRenderer>() != null)
+                gameObject.GetComponentInParent<MeshRenderer>().material = southMaterial;
         }
     }
+
 }

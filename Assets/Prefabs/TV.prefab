@@ -46,9 +46,10 @@ GameObject:
   - component: {fileID: 2991080356435493224}
   - component: {fileID: 2991080356435493225}
   - component: {fileID: 7152068318320960950}
+  - component: {fileID: 702945349783243764}
   m_Layer: 0
   m_Name: default
-  m_TagString: Magnetic2
+  m_TagString: Magnetic
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -163,11 +164,11 @@ MonoBehaviour:
   magnetismWithoutUseForces: 0
   AdvanceSettings: 0
   turnOnMagnetism: 0
-  affectByMagnetism: 1
+  affectByMagnetism: 0
   northPole: 1
   constantMagneticForce: 0
   magneticForce: 0
-  magneticDistance: 3.75
+  magneticDistance: 3
   X_Axis: 0
   Y_Axis: 0
   Z_Axis: 0
@@ -190,3 +191,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 655aef175a33720438727cc864dc6e16, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &702945349783243764
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6399282524967847142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff40f19216c4286488438619390913af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  northMaterial: {fileID: 2100000, guid: a9fbb7e0873211d44a4b55f73130bee7, type: 2}
+  southMaterial: {fileID: 2100000, guid: 60372bb77acbc8c4fb58a0875425b4f7, type: 2}

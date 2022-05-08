@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 224649129088720645}
   m_Layer: 0
   m_Name: default
-  m_TagString: Magnetic
+  m_TagString: CeilingFan
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -265,7 +265,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eec9993649524254681ec2c6746824c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isMetallic: 0
+  isMetallic: 1
   isStatic: 0
   magnetismWithoutUseForces: 0
   AdvanceSettings: 0

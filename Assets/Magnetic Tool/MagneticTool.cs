@@ -129,6 +129,7 @@ public class MagneticTool : MonoBehaviour
         magneticArea.radius = magneticDistance;
         timer = 0;
         polarityTimer = 0;
+        NorthPole = Convert.ToBoolean(UnityEngine.Random.Range(0, 2));
     }
 
     private void Update()

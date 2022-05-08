@@ -112,7 +112,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Magnetic") && magnet.NorthPole == false)
+            if (other.CompareTag("CeilingFan") && magnet.NorthPole == false)
             {
                 other.GetComponent<MagneticTool>().AffectByMagnetism = true;
 
@@ -122,9 +122,20 @@ namespace Com.MorganHouston.MagnetDestroyer
                 if(other.GetComponent<RotateObject>() != null)
                     other.GetComponent<RotateObject>().enabled = false;
             }
-            else if (other.CompareTag("Magnetic") && magnet.NorthPole == true)
+            else if (other.CompareTag("CeilingFan") && magnet.NorthPole == true)
             {
                 other.GetComponent<MagneticTool>().AffectByMagnetism = false;
+            }
+
+            if (other.CompareTag("Magnetic"))
+            {
+                other.GetComponent<MagneticTool>().AffectByMagnetism = true;
+
+                if (other.GetComponentInChildren<Light>() != null)
+                    other.GetComponentInChildren<Light>().intensity = 0;
+
+                if (other.GetComponent<RotateObject>() != null)
+                    other.GetComponent<RotateObject>().enabled = false;
             }
         }
 

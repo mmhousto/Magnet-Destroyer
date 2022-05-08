@@ -149,6 +149,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2833382941749529272, guid: 71ae65842e94c8f49bfe7cf4d2f5bf91, type: 3}
+      propertyPath: isMetallic
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3139953523570833390, guid: 71ae65842e94c8f49bfe7cf4d2f5bf91, type: 3}
       propertyPath: m_Name
       value: ComputerScreen (1)
@@ -306,6 +310,10 @@ PrefabInstance:
     - target: {fileID: 6936751806887357097, guid: 2ab797d136893984d95d42162ef2562c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7480182634166158302, guid: 2ab797d136893984d95d42162ef2562c, type: 3}
+      propertyPath: isMetallic
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7480182634166158302, guid: 2ab797d136893984d95d42162ef2562c, type: 3}
       propertyPath: magneticRigidbody
@@ -563,6 +571,14 @@ PrefabInstance:
     - target: {fileID: 7618780553396238704, guid: 4c20b3948e16c1744ae8beeb24c37599, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7940376044919021189, guid: 4c20b3948e16c1744ae8beeb24c37599, type: 3}
+      propertyPath: northPole
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7940376044919021189, guid: 4c20b3948e16c1744ae8beeb24c37599, type: 3}
+      propertyPath: isMetallic
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c20b3948e16c1744ae8beeb24c37599, type: 3}

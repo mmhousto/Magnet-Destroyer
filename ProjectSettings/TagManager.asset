@@ -11,6 +11,10 @@ TagManager:
   - Reset
   - MetalicCube1
   - Magnetic2
+  - HiScores
+  - GameOverHiScores
+  - MemberLabel
+  - CeilingFan
   layers:
   - Default
   - TransparentFX

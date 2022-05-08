@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8175469532118727249}
   - component: {fileID: 8175469532118727254}
+  - component: {fileID: 3933839645805977369}
   m_Layer: 0
   m_Name: Magnet
   m_TagString: Untagged
@@ -46,13 +47,13 @@ MonoBehaviour:
   isMetallic: 0
   isStatic: 1
   magnetismWithoutUseForces: 0
-  AdvanceSettings: 0
+  AdvanceSettings: 1
   turnOnMagnetism: 1
   affectByMagnetism: 0
   northPole: 1
-  constantMagneticForce: 0
+  constantMagneticForce: 1
   magneticForce: 500
-  magneticDistance: 10
+  magneticDistance: 6.5
   X_Axis: 0
   Y_Axis: 0
   Z_Axis: 0
@@ -61,8 +62,22 @@ MonoBehaviour:
   OffsetTime: 0
   TimeOn: 0
   TimeOff: 0
-  changePolarity: 0
-  timeToChange: 0
+  changePolarity: 1
+  timeToChange: 2.5
+--- !u!114 &3933839645805977369
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8175469532118727248}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ff40f19216c4286488438619390913af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  northMaterial: {fileID: 2100000, guid: a9fbb7e0873211d44a4b55f73130bee7, type: 2}
+  southMaterial: {fileID: 2100000, guid: 60372bb77acbc8c4fb58a0875425b4f7, type: 2}
 --- !u!1 &8175469532212823614
 GameObject:
   m_ObjectHideFlags: 0
@@ -93,7 +108,7 @@ Transform:
   m_GameObject: {fileID: 8175469532212823614}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 40, y: -0, z: -24.75}
-  m_LocalScale: {x: 2, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 1, z: 0.5}
   m_Children:
   - {fileID: 8175469532118727249}
   m_Father: {fileID: 0}

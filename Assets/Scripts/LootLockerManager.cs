@@ -15,11 +15,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         public static LootLockerManager Instance { get { return _instance; } }
 
-        public GameManager gameManager;
-
-        public GameObject okayBadButton, errorScreen, mainMenuScreen, signInScreen, destroyButton;
-
-        public TextMeshProUGUI highscoresLabel, gameOverHighscoresLabel, memberIDLabel;
+        private TextMeshProUGUI highscoresLabel, gameOverHighscoresLabel, memberIDLabel;
 
         public bool isSignedIn;
 
@@ -36,14 +32,50 @@ namespace Com.MorganHouston.MagnetDestroyer
                 Destroy(this.gameObject);
             else
                 _instance = this;
+ 
+            DontDestroyOnLoad(this.gameObject);
+
+            highscoresLabel = GameObject.FindWithTag("HiScores").GetComponent<TextMeshProUGUI>();
+            gameOverHighscoresLabel = GameObject.FindWithTag("GameOverHiScores").GetComponent<TextMeshProUGUI>();
+            memberIDLabel = GameObject.FindWithTag("MemberLabel").GetComponent<TextMeshProUGUI>();
         }
 
         void Start()
         {
-            if (isSignedIn)
+            
+        }
+
+        private void Update()
+        {
+            if (GameManager._instance.gameStarted == false && GameManager._instance.hiScoreScreen != null)
             {
-                Login();
+                if (highscoresLabel == null && GameManager._instance.hiScoreScreen.activeInHierarchy && GameManager._instance.gameStarted == false)
+                {
+                    highscoresLabel = GameObject.FindWithTag("HiScores").GetComponent<TextMeshProUGUI>();
+                }
+
+                if (highscoresLabel.text != highscores && highscoresLabel != null)
+                {
+                    highscoresLabel.text = highscores;
+                }
+
             }
+            else if(GameManager._instance.gameOver == true && GameManager._instance.gameOverScreen != null)
+            {
+                if (gameOverHighscoresLabel == null && GameManager._instance.gameOverScreen.activeInHierarchy)
+                {
+                    gameOverHighscoresLabel = GameObject.FindWithTag("GameOverHiScores").GetComponent<TextMeshProUGUI>();
+                }
+
+                if (gameOverHighscoresLabel.text != gameOverHighscores && gameOverHighscoresLabel != null)
+                {
+                    gameOverHighscoresLabel.text = gameOverHighscores;
+                }
+            }
+
+            
+
+            
         }
 
         public void SignInGuest()
@@ -52,17 +84,15 @@ namespace Com.MorganHouston.MagnetDestroyer
             {
                 if (!response.success)
                 {
-                    errorScreen.SetActive(true);
-                    signInScreen.SetActive(false);
+                    GameManager._instance.ShowErrorScreen();
                     isSignedIn = false;
                     for (signInAttempts = 0; signInAttempts < MAX_SIGN_IN_ATTEMPTS; signInAttempts++)
                     {
                         SignInGuest();
                         return;
                     }
-                    okayBadButton.SetActive(true);
-                    EventSystem.current.SetSelectedGameObject(null);
-                    EventSystem.current.SetSelectedGameObject(okayBadButton);
+                    GameManager._instance.ShowOfflineContinue();
+
                     return;
                 }
 
@@ -83,26 +113,19 @@ namespace Com.MorganHouston.MagnetDestroyer
         private void Login()
         {
             isSignedIn = true;
-            signInScreen.SetActive(false);
-            errorScreen.SetActive(false);
-            mainMenuScreen.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(destroyButton);
+            GameManager._instance.ShowMainMenu();
         }
 
         private void ErrorTryAgainPlatform(string playerID, string userName)
         {
-            errorScreen.SetActive(true);
-            signInScreen.SetActive(false);
+            GameManager._instance.ShowErrorScreen();
             isSignedIn = false;
             for (signInAttempts = 0; signInAttempts < MAX_SIGN_IN_ATTEMPTS; signInAttempts++)
             {
                 SignIn(playerID, userName);
                 return;
             }
-            okayBadButton.SetActive(true);
-            EventSystem.current.SetSelectedGameObject(null);
-            EventSystem.current.SetSelectedGameObject(okayBadButton);
+            GameManager._instance.ShowOfflineContinue();
             return;
         }
 
@@ -167,7 +190,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                 {
                     foreach (LootLockerLeaderboardMember playerData in response.items)
                     {
-                        highscores += $"{playerData.rank}\t\t\t{((playerData.player.name != null) ? playerData.player.name : playerData.member_id)}\t\t\t{playerData.score}\n";
+                        highscores += $"{playerData.rank}\t\t\t{((playerData.player.name != String.Empty) ? playerData.player.name : playerData.member_id)}\t\t\t{playerData.score}\n";
                     }
                     highscoresLabel.text = "RANK\t\t\tMEMBER\t\t\tSCORE\n" +
                                             highscores;
@@ -198,7 +221,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                         {
                             foreach (LootLockerLeaderboardMember playerData in response.items)
                             {
-                                gameOverHighscores += $"{playerData.rank}\t\t\t{((playerData.player.name != null) ? playerData.player.name : playerData.member_id)}\t\t\t{playerData.score}\n";
+                                gameOverHighscores += $"{playerData.rank}\t\t\t{((playerData.player.name != String.Empty) ? playerData.player.name : playerData.member_id)}\t\t\t{playerData.score}\n";
                             }
                             gameOverHighscoresLabel.text = "RANK\t\tMEMBER\t\tSCORE\n" +
                                                     gameOverHighscores;
