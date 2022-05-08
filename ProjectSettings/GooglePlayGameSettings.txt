@@ -6,3 +6,5 @@ proj.ConstantsClassName=GPGSIds
 and.ResourceData=%3c%3fxml+version%3d%221.0%22+encoding%3d%22utf-8%22%3f%3e%0d%0a%3c%21--Google+Play+game+services+IDs.+Save+this+file+as+res%2fvalues%2fgames-ids.xml+in+your+project.--%3e%0d%0a%3cresources%3e%0d%0a++%3c%21--app_id--%3e%0d%0a++%3cstring+name%3d%22app_id%22+translatable%3d%22false%22%3e745303241745%3c%2fstring%3e%0d%0a++%3c%21--package_name--%3e%0d%0a++%3cstring+name%3d%22package_name%22+translatable%3d%22false%22%3e%3c%2fstring%3e%0d%0a++%3c%21--achievement+Destroyer--%3e%0d%0a++%3cstring+name%3d%22achievement_destroyer%22+translatable%3d%22false%22%3eCgkIkeijvNgVEAIQAA%3c%2fstring%3e%0d%0a%3c%2fresources%3e
 and.ClientId=745303241745-hosed6uhptv8mq1fjl2s0j20l60t33rp.apps.googleusercontent.com
 android.SetupDone=true
+App.NearbdServiceId=com.MorganHouston.MagnetDestroyer
+android.NearbySetupDone=true

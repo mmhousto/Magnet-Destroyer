@@ -4,7 +4,9 @@ using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using UnityEngine.SocialPlatforms;
+#if UNITY_IOS
 using UnityEngine.SocialPlatforms.GameCenter;
+#endif
 
 namespace Com.MorganHouston.MagnetDestroyer
 {
@@ -36,6 +38,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         void InitializePlayGamesLogin()
         {
+            PlayGamesPlatform.DebugLogEnabled = true;
             PlayGamesPlatform.Activate();
         }
 
