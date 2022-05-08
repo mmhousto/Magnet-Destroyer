@@ -21,6 +21,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         private string highscores, gameOverHighscores;
         int memberID;
+        string userName;
         string leaderboardID = "highscore-key";
         int count = 10;
         int signInAttempts = 0;
@@ -72,8 +73,6 @@ namespace Com.MorganHouston.MagnetDestroyer
                     gameOverHighscoresLabel.text = gameOverHighscores;
                 }
             }
-
-            
 
             
         }
@@ -129,13 +128,15 @@ namespace Com.MorganHouston.MagnetDestroyer
             return;
         }
 
-        private void UpdatePlayerName(string userName)
+        public void UpdatePlayerName(string userName)
         {
             LootLockerSDKManager.SetPlayerName(userName, (response) =>
             {
                 if (response.success)
                 {
                     Debug.Log("Successfully set player name");
+                    this.userName = response.name;
+                    memberIDLabel.text = "User: " + userName;
                 }
                 else
                 {
@@ -151,6 +152,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                 if (response.success)
                 {
                     Debug.Log("session with LootLocker started");
+                    this.userName = userName;
                     memberID = response.player_id;
                     memberIDLabel.text = "User: " + userName;
                     UpdatePlayerName(userName);

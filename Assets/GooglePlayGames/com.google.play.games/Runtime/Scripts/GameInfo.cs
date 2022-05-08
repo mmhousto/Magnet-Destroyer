@@ -38,7 +38,7 @@ namespace GooglePlayGames {
 
         public const string ApplicationId = "745303241745"; // Filled in automatically
         public const string IosClientId = "__IOS_CLIENTID__"; // Filled in automatically
-        public const string WebClientId = "745303241745-hosed6uhptv8mq1fjl2s0j20l60t33rp.apps.googleusercontent.com"; // Filled in automatically
+        public const string WebClientId = "745303241745-mrs1nb4qjhp2ch6i27k7fg39pajc3k1o.apps.googleusercontent.com"; // Filled in automatically
         public const string NearbyConnectionServiceId = "com.MorganHouston.MagnetDestroyer";
 
         public static bool ApplicationIdInitialized() {
