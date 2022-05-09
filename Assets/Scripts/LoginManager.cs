@@ -6,9 +6,6 @@ using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 #endif
 using UnityEngine.SocialPlatforms;
-#if UNITY_IOS
-using UnityEngine.SocialPlatforms.GameCenter;
-#endif
 
 namespace Com.MorganHouston.MagnetDestroyer
 {
@@ -57,6 +54,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                     playerID = Social.localUser.id;
                     userName = Social.localUser.userName;
                     signingInScreen.SetActive(false);
+                    Debug.Log($"PlayerID: {playerID}, UserName: {userName}");
                     LootLockerManager.Instance.SignIn(playerID, userName);
                 }
                 else

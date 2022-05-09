@@ -74,6 +74,16 @@ namespace Com.MorganHouston.MagnetDestroyer
                 }
             }
 
+            if (GameManager._instance.gameStarted == false && GameManager._instance.gameOver == false && GameManager._instance.hiScoreScreen != null && GameManager._instance.hiScoreScreen.activeInHierarchy)
+            {
+                if(memberIDLabel == null)
+                {
+                    memberIDLabel = GameObject.FindWithTag("MemberLabel").GetComponent<TextMeshProUGUI>();
+                }
+
+                SetMemberIDLabel();
+            }
+
             
         }
 
@@ -117,15 +127,24 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         private void ErrorTryAgainPlatform(string playerID, string userName)
         {
+            signInAttempts++;
             GameManager._instance.ShowErrorScreen();
             isSignedIn = false;
-            for (signInAttempts = 0; signInAttempts < MAX_SIGN_IN_ATTEMPTS; signInAttempts++)
+            if(signInAttempts < 3)
             {
                 SignIn(playerID, userName);
                 return;
             }
             GameManager._instance.ShowOfflineContinue();
             return;
+        }
+
+        public void SetMemberIDLabel()
+        {
+            if(userName != null && memberIDLabel.text != "User: " + userName)
+                memberIDLabel.text = "User: " + userName;
+            else if(memberIDLabel.text != "User: " + memberID.ToString() && userName == null)
+                memberIDLabel.text = "User: " + memberID.ToString();
         }
 
         public void UpdatePlayerName(string userName)
@@ -161,8 +180,8 @@ namespace Com.MorganHouston.MagnetDestroyer
                 }
                 else
                 {
-                    Debug.Log("failed to start sessions" + response.Error);
-                    ErrorTryAgainPlatform(playerID, userName);
+                    Debug.Log("failed to start sessions: " + response.Error);
+                    ErrorTryAgainPlatform(playerID, userName);  
                 }
             });
         }

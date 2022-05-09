@@ -13,7 +13,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         // Start is called before the first frame update
         void Start()
         {
-            controlsLabel.GetComponent<TextMeshProUGUI>();
+            controlsLabel = GetComponent<TextMeshProUGUI>();
 #if (UNITY_ANDROID || UNITY_IOS)
             controlsLabel.text = "Move: Swipe\nMagnetize: Tap\nDe-Magnetize: Tap\nSelect: Tap";
 #elif UNITY_WSA

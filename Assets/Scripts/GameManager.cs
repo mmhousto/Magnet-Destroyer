@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.EventSystems;
 using StarterAssets;
@@ -11,9 +12,11 @@ namespace Com.MorganHouston.MagnetDestroyer
     {
         public static GameManager _instance;
 
+        public PlayerInput playerInput;
         public StarterAssetsInputs inputs;
         public GameObject menuCam, gameCam, magnet, mainMenuCanvas, gameOverScreen, tryAgainButton, pauseMenu, resumeGameButton;
-        public GameObject okayBadButton, errorScreen, mainMenuScreen, signInScreen, destroyButton, hiScoreScreen, GameOverScreen, hud;
+        public GameObject okayBadButton, errorScreen, mainMenuScreen, signInScreen, destroyButton, hiScoreScreen,
+            hud, onScreenControls, signingInScreen;
         public bool gameStarted = false;
         public bool gameOver = false;
         public bool isPaused = false;
@@ -23,7 +26,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         private void Awake()
         {
             _instance = this;
-            inputs.DisableInput();
+            inputs.EnableMouseInput();
         }
 
         private void Start()
@@ -31,6 +34,7 @@ namespace Com.MorganHouston.MagnetDestroyer
             SpawnManager._sharedInstance.PoolObjects();
             hiScoreScreen.SetActive(false);
             gameOverScreen.SetActive(false);
+            onScreenControls.SetActive(false);
             hud.SetActive(false);
             gameOver = false;
             isPaused = false;
@@ -40,6 +44,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                 StartGame();
             }else if(LootLockerManager.Instance.isSignedIn == true)
             {
+                LootLockerManager.Instance.SetMemberIDLabel();
                 ShowMainMenu();
                 
             }
@@ -53,18 +58,16 @@ namespace Com.MorganHouston.MagnetDestroyer
         // Update is called once per frame
         void Update()
         {
-            if(gameOver == true)
-            {
-                pauseMenu.SetActive(false);
-                gameOverScreen.SetActive(true);
-            }
+
         }
 
         public void ShowMainMenu()
         {
             signInScreen.SetActive(false);
+            signingInScreen.SetActive(false);
             errorScreen.SetActive(false);
             mainMenuScreen.SetActive(true);
+            onScreenControls.SetActive(false);
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(destroyButton);
         }
@@ -85,9 +88,14 @@ namespace Com.MorganHouston.MagnetDestroyer
         // Start is called before the first frame update
         public void GameOver()
         {
+            inputs.EnableMouseInput();
+            playerInput.enabled = false;
+            pauseMenu.SetActive(false);
             gameOverScreen.SetActive(true);
+            onScreenControls.SetActive(false);
             LootLockerManager.Instance.SubmitScore();
             gameOver = true;
+            isPaused = false;
             Time.timeScale = 0;
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(tryAgainButton);
@@ -95,11 +103,13 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         public void StartGame()
         {
+            inputs.DisableInput();
             menuCam.SetActive(false);
             Destroy(mainMenuCanvas);
             magnet.SetActive(true);
             gameCam.SetActive(true);
             hud.SetActive(true);
+            onScreenControls.SetActive(true);
             SpawnManager._sharedInstance.SpawnFirstRoom();
             EventSystem.current.SetSelectedGameObject(null);
             gameStarted = true;
@@ -110,8 +120,10 @@ namespace Com.MorganHouston.MagnetDestroyer
         {
             isPaused = true;
             Time.timeScale = 0;
-            inputs.enabled = false;
+            playerInput.enabled = false;
+            inputs.EnableMouseInput();
             pauseMenu.SetActive(true);
+            onScreenControls.SetActive(false);
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(resumeGameButton);
         }
@@ -120,9 +132,11 @@ namespace Com.MorganHouston.MagnetDestroyer
         {
             isPaused = false;
             Time.timeScale = 1;
-            inputs.enabled = true;
+            playerInput.enabled = true;
+            //inputs.DisableInput();
             inputs.pause = false;
             pauseMenu.SetActive(false);
+            onScreenControls.SetActive(true);
         }
 
         public void RestartGame()
@@ -130,7 +144,9 @@ namespace Com.MorganHouston.MagnetDestroyer
             restarted = true;
             gameStarted = true;
             gameOver = false;
-            inputs.cursorLocked = true;
+            playerInput.enabled = true;
+            onScreenControls.SetActive(true);
+            inputs.DisableInput();
             Time.timeScale = 1;
             SceneManager.LoadScene(0);
         }
@@ -140,7 +156,9 @@ namespace Com.MorganHouston.MagnetDestroyer
             restarted = false;
             gameStarted = false;
             gameOver = false;
-            inputs.cursorLocked = true;
+            playerInput.enabled = true;
+            onScreenControls.SetActive(false);
+            inputs.EnableMouseInput();
             Time.timeScale = 1;
             SceneManager.LoadScene(0);
         }

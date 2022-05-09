@@ -13,21 +13,16 @@ namespace StarterAssets
             starterAssetsInputs.MoveInput(virtualMoveDirection);
         }
 
-        public void VirtualLookInput(Vector2 virtualLookDirection)
+        public void VirtualMagnetizeInput(bool virtualMagState)
         {
-            starterAssetsInputs.LookInput(virtualLookDirection);
+            starterAssetsInputs.MagnetizeInput(virtualMagState);
         }
 
-        public void VirtualJumpInput(bool virtualJumpState)
+        public void VirtualPauseInput(bool virtualPauseState)
         {
-            starterAssetsInputs.JumpInput(virtualJumpState);
+            starterAssetsInputs.PauseInput(virtualPauseState);
         }
 
-        public void VirtualSprintInput(bool virtualSprintState)
-        {
-            starterAssetsInputs.SprintInput(virtualSprintState);
-        }
-        
     }
 
 }
