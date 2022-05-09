@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+#if UNITY_ANDROID
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
+#endif
 using UnityEngine.SocialPlatforms;
 #if UNITY_IOS
 using UnityEngine.SocialPlatforms.GameCenter;
@@ -12,7 +14,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 {
     public class LoginManager : MonoBehaviour
     {
-
+        public GameObject signInScreen, signingInScreen;
         public bool loginSuccessful;
         public static string playerID;
         public static string userName;
@@ -36,11 +38,13 @@ namespace Com.MorganHouston.MagnetDestroyer
         
         }
 
+#if UNITY_ANDROID
         void InitializePlayGamesLogin()
         {
             PlayGamesPlatform.DebugLogEnabled = true;
             PlayGamesPlatform.Activate();
         }
+#endif
 
         void AuthenticateUser()
         {
@@ -52,11 +56,14 @@ namespace Com.MorganHouston.MagnetDestroyer
                     loginSuccessful = true;
                     playerID = Social.localUser.id;
                     userName = Social.localUser.userName;
+                    signingInScreen.SetActive(false);
                     LootLockerManager.Instance.SignIn(playerID, userName);
                 }
                 else
                 {
                     Debug.Log("unsuccessful");
+                    signInScreen.SetActive(true);
+                    signingInScreen.SetActive(false);
                 }
             });
 #elif UNITY_ANDROID
@@ -67,11 +74,14 @@ namespace Com.MorganHouston.MagnetDestroyer
                     loginSuccessful = true;
                     playerID = Social.localUser.id;
                     userName = Social.localUser.userName;
+                    signingInScreen.SetActive(false);
                     LootLockerManager.Instance.SignIn(playerID, userName);
                 }
                 else
                 {
                     Debug.Log("unsuccessful");
+                    signInScreen.SetActive(true);
+                    signingInScreen.SetActive(false);
                 }
             });
 #endif
