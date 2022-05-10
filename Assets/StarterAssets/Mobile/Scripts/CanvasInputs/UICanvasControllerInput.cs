@@ -13,9 +13,9 @@ namespace StarterAssets
             starterAssetsInputs.MoveInput(virtualMoveDirection);
         }
 
-        public void VirtualMagnetizeInput(bool virtualMagState)
+        public void VirtualMagnetizeInput()
         {
-            starterAssetsInputs.MagnetizeInput(virtualMagState);
+            starterAssetsInputs.MagnetizeInput();
         }
 
         public void VirtualPauseInput(bool virtualPauseState)

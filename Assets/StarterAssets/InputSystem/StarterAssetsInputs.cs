@@ -50,7 +50,7 @@ namespace StarterAssets
 
 		public void OnMagnetize(InputValue value)
         {
-			MagnetizeInput(value.isPressed);
+			MagnetizeInput();
         }
 
 		public void OnPause(InputValue value)
@@ -79,7 +79,7 @@ namespace StarterAssets
 			sprint = newSprintState;
 		}
 
-		public void MagnetizeInput(bool newMagnetizeState)
+		public void MagnetizeInput()
 		{
 			magnetize = !magnetize;
 		}

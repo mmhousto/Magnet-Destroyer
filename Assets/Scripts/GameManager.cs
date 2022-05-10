@@ -103,7 +103,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         public void StartGame()
         {
-            inputs.EnableMouseInput();
+            inputs.DisableInput();
             menuCam.SetActive(false);
             Destroy(mainMenuCanvas);
             magnet.SetActive(true);
@@ -133,7 +133,7 @@ namespace Com.MorganHouston.MagnetDestroyer
             isPaused = false;
             Time.timeScale = 1;
             SetPlayerInput(true);
-            //inputs.DisableInput();
+            inputs.DisableInput();
             inputs.pause = false;
             pauseMenu.SetActive(false);
             onScreenControls.SetActive(true);

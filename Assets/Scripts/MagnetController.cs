@@ -83,7 +83,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         private void Magnetize()
         {
-            if(magnet.NorthPole == inputs.magnetize && canMagnetize)
+            if(canMagnetize)
                 magnet.NorthPole = !inputs.magnetize;
         }
 
