@@ -12,9 +12,15 @@ using UnityEngine.InputSystem;
 
 public class MobileDisableAutoSwitchControls : MonoBehaviour
 {
-    
-#if (UNITY_IOS || UNITY_ANDROID)
 
+#if (UNITY_IOS || UNITY_ANDROID)
+    private PlayerInput playerInput;
+
+    private void Awake()
+    {
+        playerInput = GameObject.FindWithTag("Player").GetComponent<PlayerInput>();
+        playerInput.enabled = false;
+    }
 
 #else
 

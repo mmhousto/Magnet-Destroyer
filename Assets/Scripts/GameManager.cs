@@ -89,7 +89,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         public void GameOver()
         {
             inputs.EnableMouseInput();
-            playerInput.enabled = false;
+            SetPlayerInput(false);
             pauseMenu.SetActive(false);
             gameOverScreen.SetActive(true);
             onScreenControls.SetActive(false);
@@ -103,7 +103,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         public void StartGame()
         {
-            inputs.DisableInput();
+            inputs.EnableMouseInput();
             menuCam.SetActive(false);
             Destroy(mainMenuCanvas);
             magnet.SetActive(true);
@@ -120,7 +120,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         {
             isPaused = true;
             Time.timeScale = 0;
-            playerInput.enabled = false;
+            SetPlayerInput(false);
             inputs.EnableMouseInput();
             pauseMenu.SetActive(true);
             onScreenControls.SetActive(false);
@@ -132,7 +132,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         {
             isPaused = false;
             Time.timeScale = 1;
-            playerInput.enabled = true;
+            SetPlayerInput(true);
             //inputs.DisableInput();
             inputs.pause = false;
             pauseMenu.SetActive(false);
@@ -144,7 +144,7 @@ namespace Com.MorganHouston.MagnetDestroyer
             restarted = true;
             gameStarted = true;
             gameOver = false;
-            playerInput.enabled = true;
+            SetPlayerInput(true);
             onScreenControls.SetActive(true);
             inputs.DisableInput();
             Time.timeScale = 1;
@@ -156,7 +156,7 @@ namespace Com.MorganHouston.MagnetDestroyer
             restarted = false;
             gameStarted = false;
             gameOver = false;
-            playerInput.enabled = true;
+            SetPlayerInput(false);
             onScreenControls.SetActive(false);
             inputs.EnableMouseInput();
             Time.timeScale = 1;
@@ -166,6 +166,16 @@ namespace Com.MorganHouston.MagnetDestroyer
         public void ExitGame()
         {
             Application.Quit();
+        }
+
+        private void SetPlayerInput(bool enabled)
+        {
+#if (UNITY_IOS || UNITY_ANDROID)
+#else
+            playerInput.enabled = true;
+#endif
+
+
         }
 
         

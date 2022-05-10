@@ -35,7 +35,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                     signingInLabel.text = "Signing In..";
                     break;
                 case 3:
-                    signingInLabel.text = "Signing In..";
+                    signingInLabel.text = "Signing In...";
                     break;
                 default:
                     signingInLabel.text = "Signing In...";
@@ -50,7 +50,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                 dots = 1;
             }
             
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(0.5f);
         }
     }
 }

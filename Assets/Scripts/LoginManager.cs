@@ -53,7 +53,6 @@ namespace Com.MorganHouston.MagnetDestroyer
                     loginSuccessful = true;
                     playerID = Social.localUser.id;
                     userName = Social.localUser.userName;
-                    signingInScreen.SetActive(false);
                     Debug.Log($"PlayerID: {playerID}, UserName: {userName}");
                     LootLockerManager.Instance.SignIn(playerID, userName);
                 }
@@ -72,7 +71,6 @@ namespace Com.MorganHouston.MagnetDestroyer
                     loginSuccessful = true;
                     playerID = Social.localUser.id;
                     userName = Social.localUser.userName;
-                    signingInScreen.SetActive(false);
                     LootLockerManager.Instance.SignIn(playerID, userName);
                 }
                 else
