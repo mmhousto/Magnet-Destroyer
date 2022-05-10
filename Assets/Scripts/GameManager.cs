@@ -16,10 +16,12 @@ namespace Com.MorganHouston.MagnetDestroyer
         public StarterAssetsInputs inputs;
         public GameObject menuCam, gameCam, magnet, mainMenuCanvas, gameOverScreen, tryAgainButton, pauseMenu, resumeGameButton;
         public GameObject okayBadButton, errorScreen, mainMenuScreen, signInScreen, destroyButton, hiScoreScreen,
-            hud, onScreenControls, signingInScreen;
+            hud, onScreenControls, signingInScreen, continueButton;
         public bool gameStarted = false;
         public bool gameOver = false;
         public bool isPaused = false;
+
+        private bool hasContinued = false;
 
         public static bool restarted = false;
 
@@ -34,7 +36,11 @@ namespace Com.MorganHouston.MagnetDestroyer
             SpawnManager._sharedInstance.PoolObjects();
             hiScoreScreen.SetActive(false);
             gameOverScreen.SetActive(false);
-            onScreenControls.SetActive(false);
+
+            if (onScreenControls != null)
+                onScreenControls.SetActive(false);
+
+            hasContinued = false;
             hud.SetActive(false);
             gameOver = false;
             isPaused = false;
@@ -67,7 +73,10 @@ namespace Com.MorganHouston.MagnetDestroyer
             signingInScreen.SetActive(false);
             errorScreen.SetActive(false);
             mainMenuScreen.SetActive(true);
-            onScreenControls.SetActive(false);
+
+            if (onScreenControls != null)
+                onScreenControls.SetActive(false);
+
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(destroyButton);
         }
@@ -92,13 +101,39 @@ namespace Com.MorganHouston.MagnetDestroyer
             SetPlayerInput(false);
             pauseMenu.SetActive(false);
             gameOverScreen.SetActive(true);
-            onScreenControls.SetActive(false);
+
+            if (onScreenControls != null)
+                onScreenControls.SetActive(false);
+
+            if (hasContinued == true)
+                continueButton.SetActive(false);
+
             LootLockerManager.Instance.SubmitScore();
             gameOver = true;
             isPaused = false;
             Time.timeScale = 0;
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(tryAgainButton);
+        }
+
+        public void Continue()
+        {
+            magnet.GetComponent<MagnetController>().SetVelocity();
+
+            hasContinued = true;
+            inputs.DisableInput();
+            SetPlayerInput(true);
+            pauseMenu.SetActive(false);
+            gameOverScreen.SetActive(false);
+
+            if(onScreenControls != null)
+                onScreenControls.SetActive(true);
+
+            gameOver = false;
+            isPaused = false;
+            Time.timeScale = 1;
+
+            EventSystem.current.SetSelectedGameObject(null);
         }
 
         public void StartGame()
@@ -109,7 +144,10 @@ namespace Com.MorganHouston.MagnetDestroyer
             magnet.SetActive(true);
             gameCam.SetActive(true);
             hud.SetActive(true);
-            onScreenControls.SetActive(true);
+
+            if (onScreenControls != null)
+                onScreenControls.SetActive(true);
+
             SpawnManager._sharedInstance.SpawnFirstRoom();
             EventSystem.current.SetSelectedGameObject(null);
             gameStarted = true;
@@ -123,7 +161,10 @@ namespace Com.MorganHouston.MagnetDestroyer
             SetPlayerInput(false);
             inputs.EnableMouseInput();
             pauseMenu.SetActive(true);
-            onScreenControls.SetActive(false);
+
+            if (onScreenControls != null)
+                onScreenControls.SetActive(false);
+
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(resumeGameButton);
         }
@@ -136,7 +177,9 @@ namespace Com.MorganHouston.MagnetDestroyer
             inputs.DisableInput();
             inputs.pause = false;
             pauseMenu.SetActive(false);
-            onScreenControls.SetActive(true);
+
+            if (onScreenControls != null)
+                onScreenControls.SetActive(true);
         }
 
         public void RestartGame()
@@ -145,7 +188,10 @@ namespace Com.MorganHouston.MagnetDestroyer
             gameStarted = true;
             gameOver = false;
             SetPlayerInput(true);
-            onScreenControls.SetActive(true);
+
+            if (onScreenControls != null)
+                onScreenControls.SetActive(true);
+
             inputs.DisableInput();
             Time.timeScale = 1;
             SceneManager.LoadScene(0);
@@ -157,7 +203,10 @@ namespace Com.MorganHouston.MagnetDestroyer
             gameStarted = false;
             gameOver = false;
             SetPlayerInput(false);
-            onScreenControls.SetActive(false);
+
+            if (onScreenControls != null)
+                onScreenControls.SetActive(false);
+
             inputs.EnableMouseInput();
             Time.timeScale = 1;
             SceneManager.LoadScene(0);

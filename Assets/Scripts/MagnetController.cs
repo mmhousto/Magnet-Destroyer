@@ -45,6 +45,11 @@ namespace Com.MorganHouston.MagnetDestroyer
             CheckForPause();
         }
 
+        public void SetVelocity()
+        {
+            verticalSpeed = 15;
+        }
+
         private void CheckForPause()
         {
             if(inputs.pause == true && GameManager._instance.isPaused == false && GameManager._instance.gameOver == false)
