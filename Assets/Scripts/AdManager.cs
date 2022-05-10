@@ -10,7 +10,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         IRewardedAd ad;
         string androidAdUnitId = "Rewarded_Android";
         string androidGameId = "4748335";
-        string iosAdUnitId = "Interstitial_iOS";
+        string iosAdUnitId = "Rewarded_iOS";
         string iosGameId = "4748334";
         string gameId;
         string adUnitId;
