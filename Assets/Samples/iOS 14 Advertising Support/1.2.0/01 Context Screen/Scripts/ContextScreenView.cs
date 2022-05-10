@@ -35,7 +35,6 @@ namespace Unity.Advertisement.IosSupport.Components
         
         private void AuthorizationTrackingReceived(int status) {
              Debug.LogFormat("Tracking status received: {0}", status);
-            Destroy(this.gameObject);
         }
 
     }
