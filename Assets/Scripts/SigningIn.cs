@@ -8,13 +8,12 @@ namespace Com.MorganHouston.MagnetDestroyer
     public class SigningIn : MonoBehaviour
     {
 
-        private TextMeshProUGUI signingInLabel;
+        public TextMeshProUGUI signingInLabel;
         private int dots = 1;
 
         // Start is called before the first frame update
         void Start()
         {
-            signingInLabel = GetComponent<TextMeshProUGUI>();
             StartCoroutine(SignIn());
         }
 
