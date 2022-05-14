@@ -9,6 +9,7 @@ namespace Com.MorganHouston.MagnetDestroyer
     {
 
         private TextMeshProUGUI controlsLabel;
+        public 
 
         // Start is called before the first frame update
         void Start()
@@ -19,7 +20,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 #elif UNITY_WSA
             controlsLabel.text = "Move: Left Stick\nMagnetize: Right Trigger/Button South\nDe-Magnetize: Right Trigger/Button South\nSelect: Button South";
 #else
-            controlsLabel.text = "Move: A/D or Left Stick\nMagnetize: Spacebar/Enter\nDe-Magnetize: Spacebar/Enter\nSelect: Enter";
+            controlsLabel.text = "Move: A/D\nMagnetize: Spacebar/Enter/LMB\nDe-Magnetize: Spacebar/Enter/LMB\nSelect: Spacebar/Enter";
 #endif
         }
 

@@ -105,8 +105,6 @@ namespace Com.MorganHouston.MagnetDestroyer
                     return;
                 }
 
-                Debug.Log("successfully started LootLocker session");
-
                 memberID = response.player_id;
                 memberIDLabel.text = "User: " + memberID.ToString();
                 ShowTopScores();
@@ -153,13 +151,13 @@ namespace Com.MorganHouston.MagnetDestroyer
             {
                 if (response.success)
                 {
-                    Debug.Log("Successfully set player name");
+                    
                     this.userName = response.name;
                     memberIDLabel.text = "User: " + userName;
                 }
                 else
                 {
-                    Debug.Log("Error setting player name");
+                    
                 }
             });
         }
@@ -170,7 +168,7 @@ namespace Com.MorganHouston.MagnetDestroyer
             {
                 if (response.success)
                 {
-                    Debug.Log("session with LootLocker started");
+                    
                     this.userName = userName;
                     memberID = response.player_id;
                     memberIDLabel.text = "User: " + userName;
@@ -180,7 +178,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                 }
                 else
                 {
-                    Debug.Log("failed to start sessions: " + response.Error);
+                    
                     ErrorTryAgainPlatform(playerID, userName);  
                 }
             });
@@ -192,7 +190,7 @@ namespace Com.MorganHouston.MagnetDestroyer
             {
                 if (response.statusCode == 200)
                 {
-                    Debug.Log("Successful");
+                    
                     ShowScore();
                 }
                 else
@@ -213,13 +211,12 @@ namespace Com.MorganHouston.MagnetDestroyer
                     {
                         highscores += $"{playerData.rank}\t\t\t{((playerData.player.name != String.Empty) ? playerData.player.name : playerData.member_id)}\t\t\t{playerData.score}\n";
                     }
-                    highscoresLabel.text = "RANK\t\t\tMEMBER\t\t\tSCORE\n" +
-                                            highscores;
-                    Debug.Log(highscores);
+                    highscoresLabel.text = highscores;
+                    
                 }
                 else
                 {
-                    Debug.Log("failed: " + response.Error);
+                    
                     highscores = "Failed to load...";
                 }
             });
@@ -244,14 +241,12 @@ namespace Com.MorganHouston.MagnetDestroyer
                             {
                                 gameOverHighscores += $"{playerData.rank}\t\t\t{((playerData.player.name != String.Empty) ? playerData.player.name : playerData.member_id)}\t\t\t{playerData.score}\n";
                             }
-                            gameOverHighscoresLabel.text = "RANK\t\tMEMBER\t\tSCORE\n" +
-                                                    gameOverHighscores;
-                            Debug.Log(gameOverHighscores);
-                            Debug.Log("Successful");
+                            gameOverHighscoresLabel.text = gameOverHighscores;
+                            
                         }
                         else
                         {
-                            Debug.Log("failed: " + response.Error);
+                            
                             gameOverHighscores = "Failed to Load...";
                         }
                     });

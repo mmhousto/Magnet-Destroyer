@@ -711,6 +711,17 @@
                 },
                 {
                     "name": "",
+                    "id": "201e6e6f-a22f-46a9-8582-06723ba9a255",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KeyboardMouse",
+                    "action": "Submit",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "3ae65ed4-0636-4ccf-a738-a4957edf2aec",
                     "path": "*/{Cancel}",
                     "interactions": "",

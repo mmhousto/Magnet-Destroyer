@@ -221,7 +221,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         {
 #if (UNITY_IOS || UNITY_ANDROID)
 #else
-            playerInput.enabled = true;
+            playerInput.enabled = enabled;
 #endif
 
 

@@ -1,7 +1,9 @@
 ﻿using Unity.Advertisement.IosSupport.Components;
 using UnityEngine;
 using System;
+#if UNITY_IOS
 using UnityEngine.iOS;
+#endif
 
 namespace Unity.Advertisement.IosSupport.Samples
 {
@@ -34,7 +36,7 @@ namespace Unity.Advertisement.IosSupport.Samples
                 contextScreen.sentTrackingAuthorizationRequest += () => Destroy(contextScreen.gameObject);
             }
 #else
-            Debug.Log("Unity iOS Support: App Tracking Transparency status not checked, because the platform is not iOS.");
+            //Debug.Log("Unity iOS Support: App Tracking Transparency status not checked, because the platform is not iOS.");
 #endif
         }
     }   

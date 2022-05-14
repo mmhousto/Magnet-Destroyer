@@ -80,6 +80,8 @@ namespace Com.MorganHouston.MagnetDestroyer
                     signingInScreen.SetActive(false);
                 }
             });
+#else
+            LootLockerManager.Instance.SignInGuest();
 #endif
         }
     }

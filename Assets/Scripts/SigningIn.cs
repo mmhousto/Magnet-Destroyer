@@ -40,7 +40,8 @@ namespace Com.MorganHouston.MagnetDestroyer
                     signingInLabel.text = "Signing In...";
                     break;
             }
-            if(dots < 3)
+            
+            if (dots < 3)
             {
                 dots++;
             }
@@ -48,8 +49,9 @@ namespace Com.MorganHouston.MagnetDestroyer
             {
                 dots = 1;
             }
-            
-            yield return new WaitForSeconds(0.5f);
+            yield return new WaitForSeconds(0.25f);
+
+
         }
     }
 }
