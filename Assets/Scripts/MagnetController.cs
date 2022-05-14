@@ -19,7 +19,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         public float verticalSpeed = 12.5f;
         private float movementSpeed = 15f;
         [Range(0,15)]
-        private float magnetTime = 15f;
+        private float magnetTime = 7.5f;
         private bool canMagnetize = true;
 
         private void Awake()
@@ -64,7 +64,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         private void IncreaseSpeed()
         {
-            if(verticalSpeed < 60f)
+            if(verticalSpeed < 40f)
                 verticalSpeed += Time.deltaTime / 2;
         }
 
@@ -109,15 +109,20 @@ namespace Com.MorganHouston.MagnetDestroyer
                 inputs.magnetize = false;
                 magnet.NorthPole = true;
             }
-            else
-                canMagnetize = true;
+            else if(magnetTime >= 15)
+            {
+                canMagnetize = false;
+                inputs.magnetize = true;
+                magnet.NorthPole = false;
+            }
+            else { canMagnetize = true; }
 
             magnetPowerSlider.value = magnetTime;
         }
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("CeilingFan") && magnet.NorthPole == false)
+            if (other.CompareTag("CeilingFan"))
             {
                 other.GetComponent<MagneticTool>().AffectByMagnetism = true;
 
@@ -126,10 +131,6 @@ namespace Com.MorganHouston.MagnetDestroyer
 
                 if(other.GetComponent<RotateObject>() != null)
                     other.GetComponent<RotateObject>().enabled = false;
-            }
-            else if (other.CompareTag("CeilingFan") && magnet.NorthPole == true)
-            {
-                other.GetComponent<MagneticTool>().AffectByMagnetism = false;
             }
 
             if (other.CompareTag("Magnetic"))

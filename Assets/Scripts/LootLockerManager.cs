@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using TMPro;
@@ -16,6 +15,9 @@ namespace Com.MorganHouston.MagnetDestroyer
         public static LootLockerManager Instance { get { return _instance; } }
 
         private TextMeshProUGUI highscoresLabel, gameOverHighscoresLabel, memberIDLabel;
+
+        private TextAsset textAssetBlockList;
+        [SerializeField] string[] strBlockList;
 
         public bool isSignedIn;
 
@@ -43,7 +45,9 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         void Start()
         {
-            
+            textAssetBlockList = new TextAsset("dumbass,shithead,dumbfuck,jackass,asshead,dumbshit,asshead,fuckhead,ass,hoe,slut,whore,pussy,nigga,nigger,bitch,cunt,shit," +
+                "fuck,fucker,arse,damn,tits,boob,titties,bastard,cock,dick,prick,punani,twat,piss,bltch,nlgger,nlgga,shlt,tlttles,tlts,dlck,prlck,punanl,plss,suck");
+            strBlockList = textAssetBlockList.text.Split(new string[] { ",", "\n" }, StringSplitOptions.RemoveEmptyEntries);
         }
 
         private void Update()
@@ -106,7 +110,8 @@ namespace Com.MorganHouston.MagnetDestroyer
                 }
 
                 memberID = response.player_id;
-                memberIDLabel.text = "User: " + memberID.ToString();
+                GetPlayerName();
+                SetMemberIDLabel();
                 ShowTopScores();
                 Login();
 
@@ -145,19 +150,53 @@ namespace Com.MorganHouston.MagnetDestroyer
                 memberIDLabel.text = "User: " + memberID.ToString();
         }
 
+        private string FilterPlayerName(string textToCheck)
+        {
+            for(int i = 0; i < strBlockList.Length; i++)
+            {
+                string profanity = strBlockList[i];
+                Regex word = new Regex(@"(?i)(" + profanity + ")");
+                string temp = word.Replace(textToCheck, "***");
+                textToCheck = temp;
+            }
+            return textToCheck;
+        }
+
         public void UpdatePlayerName(string userName)
         {
             LootLockerSDKManager.SetPlayerName(userName, (response) =>
             {
                 if (response.success)
                 {
+                    if(response.name == "")
+                    {
+                        this.userName = null;
+                    }
+                    else
+                    {
+                        this.userName = FilterPlayerName(response.name);
+                    }
                     
-                    this.userName = response.name;
-                    memberIDLabel.text = "User: " + userName;
+                    memberIDLabel.text = "User: " + this.userName;
                 }
                 else
                 {
                     
+                }
+            });
+        }
+
+        public void GetPlayerName()
+        {
+            LootLockerSDKManager.GetPlayerName((response) =>
+            {
+                if (response.success)
+                {
+                    userName = FilterPlayerName(response.name);
+                }
+                else
+                {
+                    Debug.Log("Error getting player name");
                 }
             });
         }
@@ -168,11 +207,11 @@ namespace Com.MorganHouston.MagnetDestroyer
             {
                 if (response.success)
                 {
-                    
-                    this.userName = userName;
+                    GetPlayerName();
+                    if(this.userName == null)
+                        UpdatePlayerName(userName);
                     memberID = response.player_id;
-                    memberIDLabel.text = "User: " + userName;
-                    UpdatePlayerName(userName);
+                    memberIDLabel.text = "User: " + this.userName;
                     ShowTopScores();
                     Login();
                 }
@@ -209,7 +248,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                 {
                     foreach (LootLockerLeaderboardMember playerData in response.items)
                     {
-                        highscores += $"{playerData.rank}\t\t\t{((playerData.player.name != String.Empty) ? playerData.player.name : playerData.member_id)}\t\t\t{playerData.score}\n";
+                        highscores += $"{playerData.rank}\t\t\t{((playerData.player.name != String.Empty) ? FilterPlayerName(playerData.player.name) : playerData.member_id)}\t\t\t{playerData.score}\n";
                     }
                     highscoresLabel.text = highscores;
                     
@@ -239,7 +278,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                         {
                             foreach (LootLockerLeaderboardMember playerData in response.items)
                             {
-                                gameOverHighscores += $"{playerData.rank}\t\t\t{((playerData.player.name != String.Empty) ? playerData.player.name : playerData.member_id)}\t\t\t{playerData.score}\n";
+                                gameOverHighscores += $"{playerData.rank}\t\t\t{((playerData.player.name != String.Empty) ? FilterPlayerName(playerData.player.name) : playerData.member_id)}\t\t\t{playerData.score}\n";
                             }
                             gameOverHighscoresLabel.text = gameOverHighscores;
                             
