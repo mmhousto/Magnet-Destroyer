@@ -34,6 +34,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         private void Start()
         {
             SpawnManager._sharedInstance.PoolObjects();
+            LootLockerManager.Instance.SetMemberIDLabel();
             hiScoreScreen.SetActive(false);
             gameOverScreen.SetActive(false);
 
@@ -50,7 +51,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                 StartGame();
             }else if(LootLockerManager.Instance.isSignedIn == true)
             {
-                LootLockerManager.Instance.SetMemberIDLabel();
+                
                 ShowMainMenu();
                 
             }
@@ -215,6 +216,11 @@ namespace Com.MorganHouston.MagnetDestroyer
         public void ExitGame()
         {
             Application.Quit();
+        }
+
+        public void SetPlayerName(string userName)
+        {
+            LootLockerManager.Instance.UpdatePlayerName(userName);
         }
 
         private void SetPlayerInput(bool enabled)

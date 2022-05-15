@@ -84,8 +84,8 @@ namespace Com.MorganHouston.MagnetDestroyer
                 {
                     memberIDLabel = GameObject.FindWithTag("MemberLabel").GetComponent<TextMeshProUGUI>();
                 }
-
-                SetMemberIDLabel();
+                if(memberIDLabel != null)
+                    SetMemberIDLabel();
             }
 
             
@@ -144,9 +144,9 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         public void SetMemberIDLabel()
         {
-            if(userName != null && memberIDLabel.text != "User: " + userName)
+            if((userName != null && userName != "") && memberIDLabel.text != "User: " + userName)
                 memberIDLabel.text = "User: " + userName;
-            else if(memberIDLabel.text != "User: " + memberID.ToString() && userName == null)
+            else if(memberIDLabel.text != "User: " + memberID.ToString() && (userName == null || userName == ""))
                 memberIDLabel.text = "User: " + memberID.ToString();
         }
 
@@ -176,8 +176,8 @@ namespace Com.MorganHouston.MagnetDestroyer
                     {
                         this.userName = FilterPlayerName(response.name);
                     }
-                    
-                    memberIDLabel.text = "User: " + this.userName;
+
+                    SetMemberIDLabel();
                 }
                 else
                 {
@@ -211,7 +211,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                     if(this.userName == null)
                         UpdatePlayerName(userName);
                     memberID = response.player_id;
-                    memberIDLabel.text = "User: " + this.userName;
+                    SetMemberIDLabel();
                     ShowTopScores();
                     Login();
                 }

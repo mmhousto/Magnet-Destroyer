@@ -79,6 +79,10 @@ namespace Com.MorganHouston.MagnetDestroyer
             {
                 ad.Show();
             }
+            else
+            {
+                GameManager._instance.Continue();
+            }
         }
 
         void InitializationComplete()
@@ -110,8 +114,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         void AdClosed(object sender, EventArgs e)
         {
-            // Pre-load the next ad
-            ad.Load();
+            
             GameManager._instance.Continue();
             Debug.Log("Ad has closed");
             // Execute logic after an ad has been closed.
@@ -126,6 +129,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         void AdFailedShow(object sender, ShowErrorEventArgs args)
         {
             Debug.Log(args.Message);
+            GameManager._instance.Continue();
         }
 
         void ImpressionEvent(object sender, ImpressionEventArgs args)
