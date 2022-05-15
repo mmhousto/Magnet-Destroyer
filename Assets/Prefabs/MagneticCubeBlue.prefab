@@ -52,7 +52,7 @@ MonoBehaviour:
   affectByMagnetism: 0
   northPole: 1
   constantMagneticForce: 1
-  magneticForce: 800
+  magneticForce: 1500
   magneticDistance: 6.5
   X_Axis: 0
   Y_Axis: 0
