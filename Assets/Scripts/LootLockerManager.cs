@@ -46,7 +46,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         void Start()
         {
             textAssetBlockList = new TextAsset("dumbass,shithead,dumbfuck,jackass,asshead,dumbshit,asshead,fuckhead,ass,hoe,slut,whore,pussy,nigga,nigger,bitch,cunt,shit," +
-                "fuck,fucker,arse,damn,tits,boob,titties,bastard,cock,dick,prick,punani,twat,piss,bltch,nlgger,nlgga,shlt,tlttles,tlts,dlck,prlck,punanl,plss,suck,sex,sh|t,n|gga,n|gger,t|tties,tltties,t|t,b|tch");
+                "fuck,fucker,arse,damn,tits,boob,titties,bastard,cock,dick,prick,punani,twat,piss,bltch,nlgger,nlgga,shlt,tlttles,tlts,dlck,prlck,punanl,plss,suck,sex");
             strBlockList = textAssetBlockList.text.Split(new string[] { ",", "\n" }, StringSplitOptions.RemoveEmptyEntries);
         }
 
