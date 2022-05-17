@@ -16,7 +16,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         public StarterAssetsInputs inputs;
         public GameObject menuCam, gameCam, magnet, mainMenuCanvas, gameOverScreen, tryAgainButton, pauseMenu, resumeGameButton;
         public GameObject okayBadButton, errorScreen, mainMenuScreen, signInScreen, destroyButton, hiScoreScreen,
-            hud, onScreenControls, signingInScreen, continueButton;
+            hud, onScreenControls, signingInScreen, continueButton, signInGood;
         public bool gameStarted = false;
         public bool gameOver = false;
         public bool isPaused = false;
@@ -84,6 +84,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         public void ShowOfflineContinue()
         {
+            LootLockerManager.Instance.isSignedIn = true;
             okayBadButton.SetActive(true);
             EventSystem.current.SetSelectedGameObject(null);
             EventSystem.current.SetSelectedGameObject(okayBadButton);
@@ -92,7 +93,9 @@ namespace Com.MorganHouston.MagnetDestroyer
         public void ShowErrorScreen()
         {
             errorScreen.SetActive(true);
-            signInScreen.SetActive(false);
+            signInGood.SetActive(false);
+            signInScreen.SetActive(true);
+            signingInScreen.SetActive(false);
         }
 
         // Start is called before the first frame update
