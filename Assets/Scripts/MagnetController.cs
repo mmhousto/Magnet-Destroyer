@@ -64,7 +64,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         private void IncreaseSpeed()
         {
-            if(verticalSpeed < 40f)
+            if(verticalSpeed < 50f)
                 verticalSpeed += Time.deltaTime / 2;
         }
 
@@ -105,15 +105,18 @@ namespace Com.MorganHouston.MagnetDestroyer
 
             if (magnetTime <= 0)
             {
+                magnetTime = 0;
                 canMagnetize = false;
                 inputs.magnetize = false;
                 magnet.NorthPole = true;
             }
             else if(magnetTime >= 15)
             {
+                magnetTime = 15;
                 canMagnetize = false;
                 inputs.magnetize = true;
                 magnet.NorthPole = false;
+                
             }
             else { canMagnetize = true; }
 
@@ -151,7 +154,7 @@ namespace Com.MorganHouston.MagnetDestroyer
             {
                 if (magnet.NorthPole == true)
                 {
-                    magnetTime += 5f;
+                    magnetTime -= 5f;
                 }
                 else if (magnet.NorthPole == false)
                 {
