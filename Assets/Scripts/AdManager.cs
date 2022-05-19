@@ -22,23 +22,32 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         public async void InitServices()
         {
-#if UNITY_ANDROID
-            gameId = androidGameId;
-            adUnitId = androidAdUnitId;
-#elif UNITY_IOS
-            gameId = iosGameId;
-            adUnitId = iosAdUnitId;
-#endif
-
             try
             {
-#if (UNITY_ANDROID || UNITY_IOS)
-                InitializationOptions initializationOptions = new InitializationOptions();
-                initializationOptions.SetGameId(gameId);
-                await UnityServices.InitializeAsync(initializationOptions);
-#elif UNITY_EDITOR
-                await UnityServices.InitializeAsync();
+                if (Application.platform == RuntimePlatform.Android)
+                {
+                    gameId = androidGameId;
+                    adUnitId = androidAdUnitId;
+                    InitializationOptions initializationOptions = new InitializationOptions();
+                    initializationOptions.SetGameId(gameId);
+                    await UnityServices.InitializeAsync(initializationOptions);
+                }
+                else if (Application.platform == RuntimePlatform.IPhonePlayer)
+                {
+                    gameId = iosGameId;
+                    adUnitId = iosAdUnitId;
+                    InitializationOptions initializationOptions = new InitializationOptions();
+                    initializationOptions.SetGameId(gameId);
+                    await UnityServices.InitializeAsync(initializationOptions);
+                }
+#if UNITY_EDITOR
+                else
+                {
+                    adUnitId = "myExampleAdUnitId";
+                    await UnityServices.InitializeAsync();
+                }
 #endif
+
 
                 InitializationComplete();
             }
@@ -50,13 +59,8 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         public void SetupAd()
         {
-#if (UNITY_ANDROID || UNITY_IOS)
-            //Create
+            //Create ad
             ad = MediationService.Instance.CreateRewardedAd(adUnitId);
-#elif UNITY_EDITOR
-            //Create
-            ad = MediationService.Instance.CreateRewardedAd("myExampleAdUnit");
-#endif
 
             //Subscribe to events
             ad.OnLoaded += AdLoaded;
@@ -113,7 +117,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         void AdClosed(object sender, EventArgs e)
         {
-            
+
             GameManager._instance.Continue();
             Debug.Log("Ad has closed");
             // Execute logic after an ad has been closed.
