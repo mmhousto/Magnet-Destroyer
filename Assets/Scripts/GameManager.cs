@@ -41,6 +41,8 @@ namespace Com.MorganHouston.MagnetDestroyer
             if (onScreenControls != null)
                 onScreenControls.SetActive(false);
 
+            SetPlayerInput(false);
+
             hasContinued = false;
             hud.SetActive(false);
             gameOver = false;
@@ -143,6 +145,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         public void StartGame()
         {
             inputs.DisableInput();
+            SetPlayerInput(true);
             menuCam.SetActive(false);
             Destroy(mainMenuCanvas);
             magnet.SetActive(true);
@@ -228,7 +231,10 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         private void SetPlayerInput(bool enabled)
         {
-#if (UNITY_IOS || UNITY_ANDROID)
+#if UNITY_EDITOR
+            playerInput.enabled = enabled;
+#elif (UNITY_IOS || UNITY_ANDROID)
+            playerInput.enabled = false;
 #else
             playerInput.enabled = enabled;
 #endif

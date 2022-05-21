@@ -10,17 +10,14 @@ For the time-being; this script will disable a PlayerInput's auto switch control
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class MobileDisableAutoSwitchControls : MonoBehaviour
+namespace Com.MorganHouston.MagnetDestroyer
 {
 
-#if (UNITY_IOS || UNITY_ANDROID)
-    private PlayerInput playerInput;
-
-    private void Awake()
+    public class MobileDisableAutoSwitchControls : MonoBehaviour
     {
-        playerInput = GameObject.FindWithTag("Player").GetComponent<PlayerInput>();
-        playerInput.enabled = false;
-    }
+
+#if (UNITY_IOS || UNITY_ANDROID)
+        
 
 #else
 
@@ -31,4 +28,5 @@ void Awake()
 
 #endif
 
+    }
 }

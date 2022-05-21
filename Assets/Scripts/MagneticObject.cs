@@ -80,9 +80,9 @@ namespace Com.MorganHouston.MagnetDestroyer
                 
         }
 
-        private void OnCollisionEnter(Collision other)
+        private void OnTriggerEnter(Collider other)
         {
-            if (other.transform.CompareTag("Player") && hasHit == false)
+            if (other.CompareTag("Player") && hasHit == false)
             {
                 hasHit = true;
                 ScoreManager._instance.AddScore(1f);
