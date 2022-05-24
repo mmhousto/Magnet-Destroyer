@@ -243,7 +243,7 @@ namespace Com.MorganHouston.MagnetDestroyer
         public void ShowTopScores()
         {
             highscores = "";
-            LootLockerSDKManager.GetScoreList(2677, count, (response) =>
+            LootLockerSDKManager.GetScoreList(3215, count, (response) =>
             {
                 if (response.statusCode == 200)
                 {
@@ -273,7 +273,7 @@ namespace Com.MorganHouston.MagnetDestroyer
                     int count = 5;
                     int after = rank < 6 ? 0 : rank - 5;
 
-                    LootLockerSDKManager.GetScoreListMain(2677, count, after, (response) =>
+                    LootLockerSDKManager.GetScoreListMain(3215, count, after, (response) =>
                     {
                         if (response.statusCode == 200)
                         {
