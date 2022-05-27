@@ -7,6 +7,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 {
     public class AdManager : MonoBehaviour
     {
+#if (UNITY_IOS || UNITY_ANDROID)
         IRewardedAd ad;
         string androidAdUnitId = "Rewarded_Android";
         string androidGameId = "4748335";
@@ -146,6 +147,7 @@ namespace Com.MorganHouston.MagnetDestroyer
             Debug.Log($"Received reward: type:{e.Type}; amount:{e.Amount}");
             //GameManager._instance.Continue();
         }
+#endif
     }
 
 }
