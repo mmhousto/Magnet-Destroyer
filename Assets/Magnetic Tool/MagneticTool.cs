@@ -312,7 +312,7 @@ public class MagneticTool : MonoBehaviour
     #region Triggers
     
     //Add every magnetic object inside an area
-    private void OnTriggerStay(Collider other)
+    /*private void OnTriggerStay(Collider other)
     {
         if (!TagAllow(other.tag)) return;
         if (magneticObjects.Contains(other.gameObject) || other.gameObject == gameObject || !turnOnMagnetism) return;
@@ -323,12 +323,12 @@ public class MagneticTool : MonoBehaviour
         {
             magneticObjects.Add(other.gameObject);
         }
-    }
+    }*/
 
     private void OnTriggerEnter(Collider other)
     {
-        if (magneticObjects.Contains(other.gameObject) || other.gameObject == gameObject || !turnOnMagnetism) return;
         if (!TagAllow(other.tag)) return;
+        if (magneticObjects.Contains(other.gameObject) || other.gameObject == gameObject || !turnOnMagnetism) return;
             
         var magneticTool = other.gameObject.GetComponent<MagneticTool>();
         
@@ -337,7 +337,12 @@ public class MagneticTool : MonoBehaviour
             magneticObjects.Add(other.gameObject);
         }
     }
-    
+
+    /*public void AddToMagneticObjectsList(GameObject magneticObject)
+    {
+        magneticObjects.Add(magneticObject);
+    }*/
+
     private void OnTriggerExit(Collider other)
     {
         if (!magneticObjects.Contains(other.gameObject)) return;

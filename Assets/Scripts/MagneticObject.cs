@@ -9,15 +9,18 @@ namespace Com.MorganHouston.MagnetDestroyer
         private Vector3 spawnPosition;
         private Quaternion spawnRotation;
         private Rigidbody rb;
-        private bool hasHit = false;
+        private MagneticTool magneticTool;
+        public bool hasHit = false;
 
         private void Start()
         {
             rb = GetComponent<Rigidbody>();
+            magneticTool = GetComponent<MagneticTool>();
         }
 
         private void OnEnable()
         {
+            magneticTool = GetComponent<MagneticTool>();
 
             if (rb != null)
                 rb.velocity = Vector3.zero;
@@ -26,11 +29,10 @@ namespace Com.MorganHouston.MagnetDestroyer
             transform.localRotation = Quaternion.identity;
 
 
-            if (GetComponent<MagneticTool>() != null)
+            if (magneticTool != null)
             {
-                MagneticTool mag = GetComponent<MagneticTool>();
-                mag.AffectByMagnetism = false;
-                mag.ConstantMagneticForce = false;
+                magneticTool.AffectByMagnetism = false;
+                magneticTool.ConstantMagneticForce = false;
             }
 
             if (GetComponentInChildren<Light>() != null)
@@ -42,7 +44,7 @@ namespace Com.MorganHouston.MagnetDestroyer
             if (GetComponent<RotateObject>() != null)
             {
                 GetComponent<RotateObject>().enabled = true;
-                GetComponent<MagneticTool>().AffectByMagnetism = false;
+                magneticTool.AffectByMagnetism = false;
             }
         }
 
@@ -57,11 +59,10 @@ namespace Com.MorganHouston.MagnetDestroyer
 
             
 
-            if(GetComponent<MagneticTool>() != null)
+            if(magneticTool != null)
             {
-                MagneticTool mag = GetComponent<MagneticTool>();
-                mag.AffectByMagnetism = false;
-                mag.ConstantMagneticForce = false;
+                magneticTool.AffectByMagnetism = false;
+                magneticTool.ConstantMagneticForce = false;
 
             }
                 
@@ -75,7 +76,7 @@ namespace Com.MorganHouston.MagnetDestroyer
             if(GetComponent<RotateObject>() != null)
             {
                 GetComponent<RotateObject>().enabled = false;
-                GetComponent<MagneticTool>().AffectByMagnetism = false;
+                magneticTool.AffectByMagnetism = false;
             }
                 
         }
@@ -86,6 +87,7 @@ namespace Com.MorganHouston.MagnetDestroyer
             {
                 hasHit = true;
                 ScoreManager._instance.AddScore(1f);
+                //magneticTool.AddToMagneticObjectsList(gameObject);
             }
         }
     }

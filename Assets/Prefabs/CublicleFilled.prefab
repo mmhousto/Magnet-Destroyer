@@ -480,7 +480,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: OfficeWorkstation
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 92964094990794903, guid: a6e6ae2fb937d1c459f01d65a27afb3f, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: a6e6ae2fb937d1c459f01d65a27afb3f, type: 3}
 --- !u!4 &860117512340152012 stripped
 Transform:
