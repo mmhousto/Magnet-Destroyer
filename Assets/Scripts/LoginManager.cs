@@ -45,7 +45,7 @@ namespace Com.MorganHouston.MagnetDestroyer
 
         void AuthenticateUser()
         {
-#if UNITY_IOS
+#if (UNITY_IOS || UNITY_TVOS)
             Social.localUser.Authenticate((bool success) =>
             {
                 if (success)
